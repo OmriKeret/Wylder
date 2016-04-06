@@ -15,7 +15,7 @@ TagManager:
   - 
   - PlayerExternal
   - playerInternal
-  - 
+  - bones
   - 
   - 
   - 
@@ -38,9 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Player
+    uniqueID: 2270725103
+    locked: 1
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 2270725103
+  - name: bones
+    uniqueID: 14462751
     locked: 0
