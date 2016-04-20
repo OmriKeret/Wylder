@@ -40,7 +40,7 @@ Material:
         first:
           name: _NormalsTex
         second:
-          m_Texture: {fileID: 2800000, guid: 2ef38841dd5b9d44eae93732ff5b904c, type: 3}
+          m_Texture: {fileID: 2800000, guid: caf5069710b9b2747949fa58a2dcf301, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
