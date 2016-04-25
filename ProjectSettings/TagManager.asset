@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - PlayerExternal
-  - playerInternal
-  - EnemyExternal
-  - EnemyInternal
-  - 
+  - player sprites
+  - bones
+  - controllers
+  - charAlign
   - 
   - 
   - 
@@ -38,9 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: background back
+    uniqueID: 1370908457
     locked: 0
   - name: Player
     uniqueID: 2270725103
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 1
+  - name: bones
+    uniqueID: 14462751
+    locked: 1
+  - name: controllers
+    uniqueID: 2541641535
+    locked: 0
+  - name: background front
+    uniqueID: 627528915
     locked: 0
