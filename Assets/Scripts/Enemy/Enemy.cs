@@ -15,6 +15,8 @@ public abstract class Enemy : MonoBehaviour {
     [Range (0,100)]
     public float MaxVelocity;
     [Range(0, 100)]
+    public float RunForce;
+    [Range(0, 100)]
     public float CliimbMaxSpeed;
 
     protected List<Transform> rays;
@@ -23,6 +25,8 @@ public abstract class Enemy : MonoBehaviour {
     float distToGround;
     protected int layerMask;
 
+    protected Animator animator;
+
     //States
     protected bool isGrounded;
     protected bool isClimbing;
@@ -30,13 +34,14 @@ public abstract class Enemy : MonoBehaviour {
     public virtual void Awake()
     {
         currentHp = MAX_HP;
+        animator = GetComponent<Animator>();
     }
 
     public virtual void Start()
     {
         rays = raysCollection.GetComponentsInChildren<Transform>().Where(child=> child != raysCollection.transform).ToList<Transform>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        layerMask = ~(1 << LayerMask.NameToLayer("EnemyExternal"));// | ~(1 << LayerMask.NameToLayer("EnemyInternal"));
+        layerMask = ~(1 << LayerMask.NameToLayer("bones"));// | ~(1 << LayerMask.NameToLayer("EnemyInternal"));
         distToGround = GetComponents<Collider2D>().Min<Collider2D>(colider => colider.bounds.extents.y);
 
     }
@@ -85,11 +90,14 @@ public abstract class Enemy : MonoBehaviour {
             return;
         }
 
+        Vector2 speed = new Vector2(xv, yv);
+
         xv *= m_FacingRight ? 1 : -1; //Flip velocity
         if (_rigidbody.velocity.magnitude <= MaxVelocity)
         {
-            _rigidbody.AddForce(new Vector2(xv, yv), ForceMode2D.Force);
+            _rigidbody.AddForce(speed, ForceMode2D.Force);
         }
+        animator.SetBool("Run", speed.magnitude > 2);
     }
 
     protected virtual void Climb()
@@ -137,16 +145,16 @@ public abstract class Enemy : MonoBehaviour {
         }
         else if (raysCurrentHit[JUMP])
         {
-            Jump(1);
+            Jump(5);
         }
         else if (raysCurrentHit[FLOOR])
         {
             Debug.Log("Floor");
-            Move(10, 20);
+            Move(RunForce, 30);
         }
         else
         {
-            Move(10);
+            Move(RunForce);
         }
     }
 }
