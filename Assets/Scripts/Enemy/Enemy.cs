@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public abstract class Enemy : MonoBehaviour {
 
     protected const int MAX_HP = 5;
     protected const int UNREACHABLE = 0, CLIMB = 1, JUMP = 2, FLOOR = 3;
-    protected Vector3 raysDelta = new Vector3(.5f, 0 ,0);
+    protected Vector3 raysDelta;
 
     protected int currentHp;
     protected Rigidbody2D _rigidbody;
 
     public GameObject raysCollection;
+    [Range(0, 10)]
+    public float raySize;
     [Range (0,100)]
     public float MaxVelocity;
     [Range(0, 100)]
     public float RunForce;
     [Range(0, 100)]
     public float CliimbMaxSpeed;
+    [Range(0, 100)]
+    public float JumpForce;
 
     protected List<Transform> rays;
     protected List<bool> raysCurrentHit;
@@ -35,14 +40,15 @@ public abstract class Enemy : MonoBehaviour {
     {
         currentHp = MAX_HP;
         animator = GetComponent<Animator>();
+        raysDelta = new Vector3(raySize, 0, 0);
     }
 
     public virtual void Start()
     {
         rays = raysCollection.GetComponentsInChildren<Transform>().Where(child=> child != raysCollection.transform).ToList<Transform>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        layerMask = ~(1 << LayerMask.NameToLayer("bones"));// | ~(1 << LayerMask.NameToLayer("EnemyInternal"));
-        distToGround = GetComponents<Collider2D>().Min<Collider2D>(colider => colider.bounds.extents.y);
+        layerMask = ~(1 << LayerMask.NameToLayer("bones"));
+        distToGround = rays[FLOOR].transform.position.y;
 
     }
 
@@ -50,9 +56,10 @@ public abstract class Enemy : MonoBehaviour {
     {
         Raycastion();
         Behaviours();
+        UpdateAnimation();
     }
 
-    void Raycastion()
+    protected void Raycastion()
     {
         raysCurrentHit = new List<bool>();
         rays.ForEach(ray =>
@@ -61,12 +68,21 @@ public abstract class Enemy : MonoBehaviour {
             raysCurrentHit.Add(Physics2D.Linecast(ray.position, ray.position + raysDelta, layerMask));
         });
 
-        isGrounded = Physics2D.Raycast(transform.position, -Vector2.up, distToGround + 0.1f);
+        Debug.DrawLine(rays[FLOOR].position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f , Color.blue);
+        isGrounded = Physics2D.Linecast(transform.position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f, layerMask);
+        Debug.Log(string.Format("Grounded: {0}",isGrounded));
     }
 
-    void Behaviours()
+    protected void Behaviours()
     {
         Patrol();
+    }
+
+    private void UpdateAnimation()
+    {
+        animator.SetBool("Grounded", isGrounded);
+        animator.SetBool("InCombat", false);
+        animator.SetFloat("Velocity", _rigidbody.velocity.x);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -145,7 +161,7 @@ public abstract class Enemy : MonoBehaviour {
         }
         else if (raysCurrentHit[JUMP])
         {
-            Jump(5);
+            Jump(JumpForce);
         }
         else if (raysCurrentHit[FLOOR])
         {

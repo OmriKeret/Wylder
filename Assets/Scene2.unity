@@ -315,9 +315,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raysCollection: {fileID: 1552744639}
+  raySize: 0
   MaxVelocity: 20.4
   RunForce: 9.1
   CliimbMaxSpeed: 70
+  JumpForce: 0
 --- !u!4 &484667933
 Transform:
   m_ObjectHideFlags: 0
@@ -469,6 +471,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 47d3e747b2e87de4c8358aaa436365ea, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 47d3e747b2e87de4c8358aaa436365ea, type: 2}
   m_IsPrefabParent: 0
@@ -497,7 +503,7 @@ Transform:
   m_GameObject: {fileID: 1087735355}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.35, y: 4.977, z: 0}
-  m_LocalScale: {x: 0.9915313, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1627141126}
   m_RootOrder: 14
@@ -589,6 +595,22 @@ Prefab:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: MaxVelocity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: RunForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: JumpForce
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: raySize
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
   m_IsPrefabParent: 0
@@ -670,7 +692,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1931717845}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071067}
-  m_LocalPosition: {x: 25.07, y: 5.49, z: 0}
+  m_LocalPosition: {x: 25.07, y: 4.72, z: 0}
   m_LocalScale: {x: 0.9915314, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1627141126}
