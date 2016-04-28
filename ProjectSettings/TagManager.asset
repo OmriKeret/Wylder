@@ -47,9 +47,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Enemies 1
+    uniqueID: 1914135203
+    locked: 0
   - name: bones
     uniqueID: 14462751
-    locked: 1
+    locked: 0
   - name: controllers
     uniqueID: 2541641535
     locked: 0
