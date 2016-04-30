@@ -155,7 +155,7 @@ public abstract class Enemy : MonoBehaviour {
             Flip();
             Debug.Log(rays[UNREACHABLE].name);
         }
-        else if (raysCurrentHit[CLIMB])
+        else if (raysCurrentHit[CLIMB] && false) //Currently inactive!
         {
             Climb();
         }
