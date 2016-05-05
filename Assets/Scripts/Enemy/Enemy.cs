@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 
@@ -20,7 +21,7 @@ public abstract class Enemy : MonoBehaviour {
     [Range(0, 100)]
     public float RunForce;
     [Range(0, 100)]
-    public float CliimbMaxSpeed;
+    public float ClimbMaxSpeed;
     [Range(0, 100)]
     public float JumpForce;
 
@@ -35,6 +36,10 @@ public abstract class Enemy : MonoBehaviour {
     //States
     protected bool isGrounded;
     protected bool isClimbing;
+
+    //Counters
+    protected bool halt = false;
+    protected int walkingCounter = 0;
 
     public virtual void Awake()
     {
@@ -54,9 +59,12 @@ public abstract class Enemy : MonoBehaviour {
 
     protected virtual void Update()
     {
-        Raycastion();
-        Behaviours();
-        UpdateAnimation();
+        if (!halt)
+        {
+            Raycastion();
+            Behaviours();
+            UpdateAnimation();
+        }
     }
 
     protected void Raycastion()
@@ -82,12 +90,21 @@ public abstract class Enemy : MonoBehaviour {
     {
         animator.SetBool("Grounded", isGrounded);
         animator.SetBool("InCombat", false);
-        animator.SetFloat("Velocity", _rigidbody.velocity.x);
+        animator.SetFloat("Velocity", Mathf.Abs(_rigidbody.velocity.x));
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         
+    }
+
+    IEnumerator Wait(int seconds)
+    {
+        halt = true;
+        yield return new WaitForSeconds(seconds);
+        Flip();
+        yield return new WaitForSeconds(seconds);
+        halt = false;
     }
 
     protected abstract int Attack();
@@ -106,9 +123,8 @@ public abstract class Enemy : MonoBehaviour {
             return;
         }
 
-        Vector2 speed = new Vector2(xv, yv);
-
         xv *= m_FacingRight ? 1 : -1; //Flip velocity
+        Vector2 speed = new Vector2(xv, yv);
         if (_rigidbody.velocity.magnitude <= MaxVelocity)
         {
             _rigidbody.AddForce(speed, ForceMode2D.Force);
@@ -119,9 +135,9 @@ public abstract class Enemy : MonoBehaviour {
     protected virtual void Climb()
     {
         isClimbing = true;
-        if (_rigidbody.velocity.y <= CliimbMaxSpeed)
+        if (_rigidbody.velocity.y <= ClimbMaxSpeed)
         {
-            _rigidbody.AddForce(Vector2.up* CliimbMaxSpeed, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.up* ClimbMaxSpeed, ForceMode2D.Force);
         }
         
     }
@@ -132,7 +148,7 @@ public abstract class Enemy : MonoBehaviour {
         {
             return;
         }
-        _rigidbody.AddForce(new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.x).normalized * force, ForceMode2D.Impulse);
+        _rigidbody.AddForce(new Vector2(_rigidbody.velocity.x * 0.2f, _rigidbody.velocity.x).normalized * force, ForceMode2D.Impulse);
     }
 
     protected virtual void Flip()
@@ -148,11 +164,27 @@ public abstract class Enemy : MonoBehaviour {
         raysDelta *= -1;
     }
 
+    void turnAround()
+    {
+        float speed = _rigidbody.velocity.x;
+        if (speed > 0.5f)
+        {
+            Move(0.25f * speed);
+        }
+        else
+        {
+            StartCoroutine(Wait(2));
+            //Flip();
+            //StartCoroutine(Wait(1));
+        }
+        
+    }
+
     protected virtual void Patrol()
     {
         if (raysCurrentHit[UNREACHABLE])
         {
-            Flip();
+            turnAround();
             Debug.Log(rays[UNREACHABLE].name);
         }
         else if (raysCurrentHit[CLIMB] && false) //Currently inactive!
