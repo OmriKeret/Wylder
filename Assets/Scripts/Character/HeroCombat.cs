@@ -7,6 +7,7 @@ public class HeroCombat : MonoBehaviour {
 	private PlatformerCharacter2D characterMovment;
 	private Animator m_Anim;            // Reference to the player's animator component.
 	private Rigidbody2D m_Rigidbody2D;
+	private bool currentlyAttacking = false;
 
 	private void Awake()
 	{
@@ -19,5 +20,14 @@ public class HeroCombat : MonoBehaviour {
 	public void attack() 
 	{
 		m_Anim.SetTrigger ("Attack");
+	}
+
+	public void setAttacking() {
+		currentlyAttacking = true;
+	}
+
+
+	public void unsetAttacking() {
+		currentlyAttacking = false;
 	}
 }
