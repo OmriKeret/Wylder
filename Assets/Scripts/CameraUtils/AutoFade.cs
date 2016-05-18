@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class AutoFade : MonoBehaviour
 {
 	private static AutoFade m_Instance = null;
-	private Material m_Material = null;
-	private string m_LevelName = "";
-	private int m_LevelIndex = 0;
-	private bool m_Fading = false;
-	
+	public float fadeSpeed = 1.5f;          // Speed that the screen fades to and from black.
+	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
+	private SpriteRenderer blackScreen;
+	private bool isFading;
 	private static AutoFade Instance
 	{
 		get
@@ -20,76 +20,98 @@ public class AutoFade : MonoBehaviour
 			return m_Instance;
 		}
 	}
-	public static bool Fading
-	{
-		get { return Instance.m_Fading; }
-	}
-	
+		
 	private void Awake()
 	{
 		DontDestroyOnLoad(this);
 		m_Instance = this;
-		m_Material = new Material("Shader \"Plane/No zTest\" { SubShader { Pass { Blend SrcAlpha OneMinusSrcAlpha ZWrite Off Cull Off Fog { Mode Off } BindChannels { Bind \"Color\",color } } } }");
+		// Set the texture so that it is the the size of the screen and covers it.
+		blackScreen = this.GetComponent<SpriteRenderer>();
+
 	}
 	
-	private void DrawQuad(Color aColor,float aAlpha)
+
+	private IEnumerator FadeOutCallback(Color aColor, Action callback)
 	{
-		aColor.a = aAlpha;
-		m_Material.SetPass(0);
-		GL.PushMatrix();
-		GL.LoadOrtho();
-		GL.Begin(GL.QUADS);
-		GL.Color(aColor);   // moved here, needs to be inside begin/end
-		GL.Vertex3(0, 0, -1);
-		GL.Vertex3(0, 1, -1);
-		GL.Vertex3(1, 1, -1);
-		GL.Vertex3(1, 0, -1);
-		GL.End();
-		GL.PopMatrix();
-	}
-	float unscaledClampedDT()
-	{
-		return Mathf.Clamp(Time.unscaledDeltaTime ,0.00001f, Time.maximumDeltaTime);
-	}
-	private IEnumerator Fade(float aFadeOutTime, float aFadeInTime, Color aColor)
-	{
-		float t = 0.0f;
-		while (t<1.0f)
+
+		while (blackScreen.color.a < 0.95f)
 		{
 			yield return new WaitForEndOfFrame();
-			t = Mathf.Clamp01(t + unscaledClampedDT() / aFadeOutTime);
-			DrawQuad(aColor,t);
+			blackScreen.color = Color.Lerp(blackScreen.color, aColor, fadeSpeed * Time.deltaTime);
 		}
-		if (m_LevelName != "")
-			Application.LoadLevel(m_LevelName);
-		else
-			Application.LoadLevel(m_LevelIndex);
+
 		yield return null; // skip first frame
-		while (t>0.0f)
+
+		isFading = false;
+		if (callback != null) 
+			callback ();
+	}
+
+	private IEnumerator FadeInCallback(Action callback)
+	{
+
+		while (blackScreen.color.a > 0.05f)
 		{
 			yield return new WaitForEndOfFrame();
-			t = Mathf.Clamp01(t - unscaledClampedDT() / aFadeInTime);
-			DrawQuad(aColor,t);
+			blackScreen.color = Color.Lerp(blackScreen.color, Color.clear, fadeSpeed * Time.deltaTime);
 		}
-		m_Fading = false;
+		blackScreen.color = Color.clear;
+
+		yield return null; // skip first frame
+		isFading = false;
+		if (callback != null) 
+			callback ();
 	}
-	private void StartFade(float aFadeOutTime, float aFadeInTime, Color aColor)
+
+
+	void FadeToClear ()
 	{
-		m_Fading = true;
-		StartCoroutine(Fade(aFadeOutTime, aFadeInTime, aColor));
+		// Lerp the colour of the texture between itself and transparent.
+		blackScreen.color = Color.Lerp(blackScreen.color, Color.clear, fadeSpeed * Time.deltaTime);
 	}
-	
-	public static void LoadLevel(string aLevelName,float aFadeOutTime, float aFadeInTime, Color aColor)
+
+
+
+//	void FadeIn ()
+//	{
+//		// Fade the texture to clear.
+//		FadeToClear();
+//
+//		// If the texture is almost clear...
+//		if (blackScreen.color.a <= 0.05f)
+//		{
+//			// ... set the colour to clear and disable the GUITexture.
+//			blackScreen.color = Color.clear;
+//			fadeIn = false;
+//			blackScreen.enabled = false;
+//
+//			// The scene is no longer starting.
+//			sceneStarting = false;
+//		}
+//	}
+
+	public void startFadeIn(Action callback)
 	{
-		if (Fading) return;
-		Instance.m_LevelName = aLevelName;
-		Instance.StartFade(aFadeOutTime, aFadeInTime, aColor);
+		if (isFading) {
+			return;
+		}
+		StartCoroutine (FadeInCallback (callback));
 	}
-	public static void LoadLevel(int aLevelIndex,float aFadeOutTime, float aFadeInTime, Color aColor)
+
+	public static void FadeIn(Action callback) {
+		
+		Instance.startFadeIn(callback);
+	}
+
+	public void startFadeOut (Color aColor, Action callback)
 	{
-		if (Fading) return;
-		Instance.m_LevelName = "";
-		Instance.m_LevelIndex = aLevelIndex;
-		Instance.StartFade(aFadeOutTime, aFadeInTime, aColor);
+		if (isFading) {
+			return;
+		}
+		StartCoroutine (FadeOutCallback (aColor, callback));
+	}
+
+	public static void FadeOut(Color aColor, Action callback) {
+		Instance.startFadeOut(aColor, callback);
 	}
 }

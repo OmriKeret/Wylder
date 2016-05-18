@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets._2D;
+using EZCameraShake;
 
 public class HeroCombat : MonoBehaviour {
 
@@ -20,12 +21,16 @@ public class HeroCombat : MonoBehaviour {
 	public void attack() 
 	{
 		m_Anim.SetTrigger ("Attack");
+		AutoFade.FadeOut (Color.black, callback);
+		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 	}
 
+	public void callback() {
+		AutoFade.FadeIn(null);
+	}
 	public void setAttacking() {
 		currentlyAttacking = true;
 	}
-
 
 	public void unsetAttacking() {
 		currentlyAttacking = false;
