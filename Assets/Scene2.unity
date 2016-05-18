@@ -963,6 +963,14 @@ Prefab:
       propertyPath: BonesVisiblity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: JumpForce
+      value: 8.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449748, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
+      propertyPath: raySize
+      value: 2.23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5df335180fe56464095ccd128a4207d0, type: 2}
   m_IsPrefabParent: 0
