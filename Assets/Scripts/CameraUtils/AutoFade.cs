@@ -63,33 +63,6 @@ public class AutoFade : MonoBehaviour
 			callback ();
 	}
 
-
-	void FadeToClear ()
-	{
-		// Lerp the colour of the texture between itself and transparent.
-		blackScreen.color = Color.Lerp(blackScreen.color, Color.clear, fadeSpeed * Time.deltaTime);
-	}
-
-
-
-//	void FadeIn ()
-//	{
-//		// Fade the texture to clear.
-//		FadeToClear();
-//
-//		// If the texture is almost clear...
-//		if (blackScreen.color.a <= 0.05f)
-//		{
-//			// ... set the colour to clear and disable the GUITexture.
-//			blackScreen.color = Color.clear;
-//			fadeIn = false;
-//			blackScreen.enabled = false;
-//
-//			// The scene is no longer starting.
-//			sceneStarting = false;
-//		}
-//	}
-
 	public void startFadeIn(Action callback)
 	{
 		if (isFading) {

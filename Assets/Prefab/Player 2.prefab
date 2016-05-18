@@ -1165,6 +1165,8 @@ GameObject:
   - 114: {fileID: 11405808}
   - 114: {fileID: 11460548}
   - 114: {fileID: 11493872}
+  - 114: {fileID: 11450248}
+  - 61: {fileID: 6115212}
   m_Layer: 9
   m_Name: Player 2
   m_TagString: Player
@@ -1855,7 +1857,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137598}
-  m_LocalRotation: {x: 0.00000011467669, y: 0.00000006961657, z: -0.8288012, w: -0.55954313}
+  m_LocalRotation: {x: 0.000000094543125, y: 0.000000075839736, z: -0.8288009, w: -0.5595436}
   m_LocalPosition: {x: 0.04, y: 1.12, z: 0}
   m_LocalScale: {x: 1.0417827, y: 1.0417827, z: 1.0417827}
   m_Children:
@@ -2111,7 +2113,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 192922}
-  m_LocalRotation: {x: -0.00000005640178, y: 0.000000019275717, z: 0.9579335, w: -0.28699037}
+  m_LocalRotation: {x: -0.000000056401774, y: 0.000000019275731, z: 0.9579334, w: -0.28699064}
   m_LocalPosition: {x: 0.248, y: 0.744, z: -0}
   m_LocalScale: {x: 0.6356364, y: 0.6356391, z: 0.63563716}
   m_Children:
@@ -2777,7 +2779,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194896}
-  m_LocalRotation: {x: 0.00000006342713, y: -0.000000063887256, z: 0.6626106, w: 0.7489641}
+  m_LocalRotation: {x: 0.00000007221669, y: -0.000000044734374, z: 0.6626109, w: 0.7489639}
   m_LocalPosition: {x: 0.00000006713696, y: 0.9999999, z: 6.1359006e-14}
   m_LocalScale: {x: 0.37545618, y: 0.37545973, z: 0.37545696}
   m_Children:
@@ -2959,6 +2961,20 @@ BoxCollider2D:
   m_Offset: {x: -0.037006594, y: -1.8037304}
   serializedVersion: 2
   m_Size: {x: 1.2100013, y: 5.1200023}
+--- !u!61 &6115212
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170494}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.55018306, y: -6.492195}
+  serializedVersion: 2
+  m_Size: {x: 10.362818, y: 17.505571}
 --- !u!61 &6121776
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -3325,6 +3341,18 @@ MonoBehaviour:
   OffsetPos: {x: 0, y: 0, z: 0}
   OffsetScale: {x: 3.1900122, y: 3.190012, z: 3.1900122}
   OffsetOrient: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &11450248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f37decd7f5d4a958ac2824bf637d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnTo: {x: 0, y: 0, z: 0}
 --- !u!114 &11450684
 MonoBehaviour:
   m_ObjectHideFlags: 1

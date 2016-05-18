@@ -21,7 +21,8 @@ public class HeroCombat : MonoBehaviour {
 	public void attack() 
 	{
 		m_Anim.SetTrigger ("Attack");
-		AutoFade.FadeOut (Color.black, callback);
+		this.GetComponent<playerDeathLogic> ().die ();
+		//AutoFade.FadeOut (Color.black, callback);
 		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 	}
 

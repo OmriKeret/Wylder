@@ -5,8 +5,8 @@ using EZCameraShake;
 
 public class HPLogic : MonoBehaviour {
 
-    private int MAX_HP;
-    private int currentHp;
+    private float MAX_HP;
+    private float currentHp;
 
     //GUI fill logic
     public float changeColorDuration = 0.2f;
@@ -28,7 +28,7 @@ public class HPLogic : MonoBehaviour {
 
     }
 
-	public void reduceHpTo(int hp)
+	public void reduceHpTo(float hp)
     {
         //Debug.Log("updatedCurrentHP");
 
@@ -38,7 +38,7 @@ public class HPLogic : MonoBehaviour {
         
     }
 
-    public void setMaximumHP(int hp)
+    public void setMaximumHP(float hp)
     {
         MAX_HP = hp;
     }

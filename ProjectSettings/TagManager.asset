@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerWeapon
   - Enemy
+  - checkpoint
   layers:
   - Default
   - TransparentFX
