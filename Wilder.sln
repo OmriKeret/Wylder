@@ -5,6 +5,8 @@ Project("{16A91998-0273-BA13-475C-F041C1D35394}") = "Wilder", "Assembly-CSharp-f
 EndProject
 Project("{16A91998-0273-BA13-475C-F041C1D35394}") = "Wilder", "Assembly-CSharp.csproj", "{4D9D73EC-361F-5BC5-FC74-A76874E881F5}"
 EndProject
+Project("{16A91998-0273-BA13-475C-F041C1D35394}") = "Wilder", "Assembly-CSharp-Editor-firstpass.csproj", "{B2FA985D-61F4-057D-76D9-F83862981721}"
+EndProject
 Project("{16A91998-0273-BA13-475C-F041C1D35394}") = "Wilder", "Assembly-CSharp-Editor.csproj", "{233A9BB6-2A03-9ED5-CAED-0FF02E2484A9}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{4D9D73EC-361F-5BC5-FC74-A76874E881F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D9D73EC-361F-5BC5-FC74-A76874E881F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D9D73EC-361F-5BC5-FC74-A76874E881F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FA985D-61F4-057D-76D9-F83862981721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FA985D-61F4-057D-76D9-F83862981721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FA985D-61F4-057D-76D9-F83862981721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FA985D-61F4-057D-76D9-F83862981721}.Release|Any CPU.Build.0 = Release|Any CPU
 		{233A9BB6-2A03-9ED5-CAED-0FF02E2484A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{233A9BB6-2A03-9ED5-CAED-0FF02E2484A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233A9BB6-2A03-9ED5-CAED-0FF02E2484A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
