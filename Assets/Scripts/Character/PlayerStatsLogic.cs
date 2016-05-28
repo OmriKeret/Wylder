@@ -38,7 +38,7 @@ public class PlayerStatsLogic : MonoBehaviour {
 		if (Time.time - lastTimeHitted >= timeToStartGeneration) {
 			t += Time.deltaTime / timeToFullHealthFromCurrentHealth;
 			HP = Mathf.Lerp(HP, maxHP, t);
-			Debug.Log ("Reginerating Health, current Health:" + HP);
+
 		}
 	}
 

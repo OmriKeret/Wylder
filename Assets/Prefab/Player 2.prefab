@@ -1166,7 +1166,6 @@ GameObject:
   - 114: {fileID: 11460548}
   - 114: {fileID: 11493872}
   - 114: {fileID: 11450248}
-  - 61: {fileID: 6115212}
   m_Layer: 9
   m_Name: Player 2
   m_TagString: Player
@@ -2882,7 +2881,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170494}
   m_UseAutoMass: 1
-  m_Mass: 3.8090477
+  m_Mass: 3.809048
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 2
@@ -2961,20 +2960,6 @@ BoxCollider2D:
   m_Offset: {x: -0.037006594, y: -1.8037304}
   serializedVersion: 2
   m_Size: {x: 1.2100013, y: 5.1200023}
---- !u!61 &6115212
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170494}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.55018306, y: -6.492195}
-  serializedVersion: 2
-  m_Size: {x: 10.362818, y: 17.505571}
 --- !u!61 &6121776
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -3407,8 +3392,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 0
-  HP: 3
+  HP: 10
   Strength: 1
+  timeToStartGeneration: 3
+  timeToGenerateFromEmptyToFull: 5
 --- !u!114 &11460730
 MonoBehaviour:
   m_ObjectHideFlags: 1
