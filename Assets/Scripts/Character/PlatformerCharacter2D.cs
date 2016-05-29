@@ -24,6 +24,9 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		public bool noControl = false;
 
+		private float currentSlopeAngle;
+		public Transform slopeCheck;
+
 		// Sliding
 		public bool sliding = false;
 	
@@ -35,6 +38,7 @@ namespace UnityStandardAssets._2D
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
+			slopeCheck = transform.Find("SlopeCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
@@ -42,6 +46,13 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+			RaycastHit2D hit = Physics2D.Raycast(slopeCheck.position, -Vector2.up); //cast downwards
+			if (hit.collider != null) { //if we hit something do stuff
+				Debug.Log (hit.normal);
+
+				currentSlopeAngle = Mathf.Abs (Mathf.Atan2 (hit.normal.x, hit.normal.y) * Mathf.Rad2Deg); //get angle
+				Debug.Log("Current angle is:" + currentSlopeAngle);
+			}
             m_Grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -62,6 +73,7 @@ namespace UnityStandardAssets._2D
 
 		public void Move(float move, bool crouch, bool jump, bool run)
         {
+			
 			if (noControl) {
 				return;
 			}
@@ -101,7 +113,13 @@ namespace UnityStandardAssets._2D
                 // Move the character
 				else if (run || Mathf.Abs (m_Rigidbody2D.velocity.x) <= running_speedToStopRun) {
 					m_Rigidbody2D.drag = 1f;
-					m_Rigidbody2D.velocity = new Vector2 (move * maxSpeed, m_Rigidbody2D.velocity.y);
+
+					if (currentSlopeAngle > 0 && currentSlopeAngle < 40) {
+						m_Rigidbody2D.velocity = new Vector2 (move * maxSpeed, move * maxSpeed * 0.2f);
+					} else {
+						m_Rigidbody2D.velocity = new Vector2 (move * maxSpeed, m_Rigidbody2D.velocity.y);
+					}
+
 				} else {
 					m_Rigidbody2D.drag = 1f;
 				}
