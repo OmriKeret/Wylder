@@ -118,5 +118,12 @@ public class PlayerController2D : MonoBehaviour
         {
             _motor.Dash();
         }
+
     }
+	void FixedUpdate() 
+	{
+		// Read the inputs.
+		_motor.sprint = Input.GetButton("Run");
+		_motor.forceSlip = Input.GetButton("Crouch");
+	}
 }

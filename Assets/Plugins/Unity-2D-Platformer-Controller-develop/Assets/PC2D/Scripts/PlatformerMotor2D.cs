@@ -61,6 +61,21 @@ public class PlatformerMotor2D : MonoBehaviour
     /// </summary>
     public float groundSpeed = 8f;
 
+	/// <summary>
+	/// The maximum speed the motor will move on the ground, only effects horizontal speed.
+	/// </summary>
+	public float sprintSpeed = 8f;
+
+	/// <summary>
+	/// Is the character sprinting.
+	/// </summary>
+	public bool sprint = false;
+
+	/// <summary>
+	/// Is the character sprinting.
+	/// </summary>
+	public bool forceSlip = false;
+
     /// <summary>
     /// How much time does it take for the motor to get from zero speed to max speed. This value
     /// is used to calculate the acceleration.
@@ -1599,6 +1614,7 @@ public class PlatformerMotor2D : MonoBehaviour
             }
             else
             {
+
                 ChangeState(MotorState.OnGround);
 
                 if (onSlope)
@@ -2515,7 +2531,12 @@ public class PlatformerMotor2D : MonoBehaviour
 
                     if (groundStopDistance > 0)
                     {
-                        float deceleration = (groundSpeed * groundSpeed) / (2 * groundStopDistance);
+						float deceleration = 1;
+						if (sprint) {
+							deceleration = (sprintSpeed * sprintSpeed) / (2 * groundStopDistance);
+						} else {
+							deceleration = (groundSpeed * groundSpeed) / (2 * groundStopDistance);
+						}
 
                         if (onSlope && changeSpeedOnSlopes)
                         {
@@ -2580,7 +2601,7 @@ public class PlatformerMotor2D : MonoBehaviour
     private void GetSpeedAndMaxSpeedOnGround(out float speed, out float maxSpeed)
     {
         Vector3 moveDir = GetMovementDir(_velocity.x);
-
+		float realGroundSpeed = sprint ? sprintSpeed : groundSpeed;
         if (onSlope)
         {
             speed = velocity.magnitude * Mathf.Sign(_velocity.x);
@@ -2602,26 +2623,27 @@ public class PlatformerMotor2D : MonoBehaviour
             {
                 if (moveDir.y > 0)
                 {
-                    maxSpeed = groundSpeed *
+
+					maxSpeed = realGroundSpeed *
                         Vector3.Dot(Vector3.right * Mathf.Sign(moveDir.x), moveDir) *
                         speedMultiplierOnSlope;
                 }
                 else
                 {
-                    maxSpeed = groundSpeed *
+					maxSpeed = realGroundSpeed *
                         (2f - Vector3.Dot(Vector3.right * Mathf.Sign(moveDir.x), moveDir) *
                         speedMultiplierOnSlope);
                 }
             }
             else
             {
-                maxSpeed = groundSpeed;
+				maxSpeed = realGroundSpeed;
             }
         }
         else
         {
             speed = _velocity.x;
-            maxSpeed = groundSpeed;
+			maxSpeed = realGroundSpeed;
         }
     }
 

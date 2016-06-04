@@ -72,7 +72,7 @@ namespace PC2D
                 }
                 else if (_motor.motorState == PlatformerMotor2D.MotorState.Slipping)
                 {
-                    _animator.Play("Slip");
+					_animator.Play("Slide");
                 }
                 else if (_motor.motorState == PlatformerMotor2D.MotorState.Dashing)
                 {
@@ -82,12 +82,21 @@ namespace PC2D
                 {
                     if (_motor.velocity.sqrMagnitude >= 0.1f * 0.1f)
                     {
-                        _animator.Play("Walk");
+						float speed = _motor.velocity.magnitude;
+						if (_motor.sprint) {
+							_animator.Play ("Run");
+						} else if (speed > _motor.groundSpeed && !_motor.onSlope || speed > _motor.sprintSpeed) {
+							_animator.Play("Slide");
+						} else {
+							_animator.Play("Walk");
+						}
+                        
                     }
                     else
                     {
                         _animator.Play("Idle");
                     }
+
                 }
             }
 
