@@ -2,38 +2,192 @@
 using System.Collections;
 using UnityStandardAssets._2D;
 using EZCameraShake;
+using System.Collections.Generic;
+using PC2D;
 
-public class HeroCombat : MonoBehaviour {
+public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	private PlatformerCharacter2D characterMovment;
 	private Animator m_Anim;            // Reference to the player's animator component.
 	private Rigidbody2D m_Rigidbody2D;
-	private bool currentlyAttacking = false;
+	private playerDeathLogic deathLogic;
+	private PlayerStatsLogic playerStats;
+	private PlatformerAnimation2D animationLogic;
+
+
+	//Player state.
+	private eCharState playerState;
+
+	//Name table for animation state.
+	public string[] AnimatorStateNames = {"Jump","Land", "RunStop", "Slide", "Run", "Walk", "Roll", "Attack", "Walk__Combat", "Idle_Combat", "runAttack"};
+	private Dictionary<int, string> NameTable { get; set; }
 
 	private void Awake()
 	{
 		characterMovment = GetComponent<PlatformerCharacter2D>();
 		m_Anim = GetComponent<Animator>();
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		deathLogic = GetComponent<playerDeathLogic> ();
+		playerStats = GetComponent<PlayerStatsLogic> ();
+		animationLogic = GetComponent<PlatformerAnimation2D> ();
+		BuildNameTable ();
 	}
-		
+
+	// Mainly used to synchornize player animation and state.
+	void Update() 
+	{
+		string currentAnimation = GetCurrentAnimatorStateName ();
+		if (currentAnimation.StartsWith ("Attack")) {
+			playerState = eCharState.Attacking;
+		} else if (currentAnimation.StartsWith ("Counter")) {
+			playerState = eCharState.Countering;
+		} else if (currentAnimation.StartsWith ("Block")) {
+			playerState = eCharState.Blocking;
+		} else if (currentAnimation.StartsWith ("Hit")) {
+			playerState = eCharState.UnderAttack;
+		} else if (currentAnimation.StartsWith ("Killing")) {
+			playerState = eCharState.KillingMove;
+		} else {
+			playerState = eCharState.Default;
+		}
+	}
+	#region Animation playing test region.
+	private void BuildNameTable()
+	{
+		NameTable = new Dictionary<int, string>();
+
+		foreach (string stateName in AnimatorStateNames)
+		{
+
+			NameTable[Animator.StringToHash(stateName)] = stateName;
+		}
+	}
+
+	public string GetCurrentAnimatorStateName()
+	{
+		AnimatorStateInfo stateInfo = m_Anim.GetCurrentAnimatorStateInfo(0);
+
+		string stateName;
+		if (NameTable.TryGetValue(stateInfo.shortNameHash, out stateName))
+		{
+			return stateName;
+		}
+		else
+		{
+			Debug.LogWarning("Unknown animator state name.");
+			return string.Empty;
+		}
+	}
+
+	#endregion
+	public bool isAttacking() {
+		return GetCurrentAnimatorStateName ().StartsWith ("Attack");
+	}
 
 	public void attack() 
 	{
-		m_Anim.SetTrigger ("Attack");
-		this.GetComponent<playerDeathLogic> ().die ();
+		// In case player can't attack then return.
+		if (playerState == eCharState.Countering || playerState == eCharState.KillingMove || playerState == eCharState.UnderAttack) {
+			return;
+		}
+
+		playerState = eCharState.Attacking;
+		animationLogic.attack ();
+//		this.GetComponent<playerDeathLogic> ().die ();
 		//AutoFade.FadeOut (Color.black, callback);
 		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
+	}
+		
+
+	public void counter() 
+	{
+		if (playerState == eCharState.Default || playerState == eCharState.Attacking || playerState == eCharState.Blocking) {
+
+			playerState = eCharState.Countering;
+			animationLogic.Counter ();
+		}
+
+	}
+
+	public void block() 
+	{
+		// In case player can't attack then return.
+		if (playerState == eCharState.Countering || playerState == eCharState.KillingMove || playerState == eCharState.UnderAttack) {
+			return;
+		}
+
+		playerState = eCharState.Blocking;
+		animationLogic.Block ();
+		//		this.GetComponent<playerDeathLogic> ().die ();
+		//AutoFade.FadeOut (Color.black, callback);
+		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
+	}
+
+	public void counterSuccess() 
+	{
+		m_Anim.SetTrigger ("Killing");
+		playerState = eCharState.KillingMove;
 	}
 
 	public void callback() {
 		AutoFade.FadeIn(null);
 	}
-	public void setAttacking() {
-		currentlyAttacking = true;
+
+
+
+	#region ICharCollider implementation
+
+	public eCharState GetState ()
+	{
+		return playerState;
 	}
 
-	public void unsetAttacking() {
-		currentlyAttacking = false;
+
+	public void ActiveHitAnimation ()
+	{
+		// No need to implement as Hit take care of it all.
+
 	}
+
+	public void ActiveDeathAnimation ()
+	{
+		deathLogic.die ();
+	}
+
+	public void ActiveHitSound ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public void ActiveDeathSound ()
+	{
+		// No implementation needed. deathLogic take care of it all.
+	}
+
+	public bool Hit (int dmg)
+	{
+		CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
+		CameraUtils.Instance.blinkCamera();
+		animationLogic.Hit ();
+		playerState = eCharState.UnderAttack;
+		return playerStats.hit (dmg);
+
+	}
+
+	// The meaning here is active killing move animation, as the counter succeeded
+	public void ActiveCounterAnimation ()
+	{
+		counterSuccess ();
+	}
+
+	#endregion
+
+	public bool IsStablizie() 
+	{
+		if (playerState == eCharState.Attacking) {
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -7,5 +7,6 @@ public enum eCharState {
     Attacking,
     Blocking,
     Countering,
-    UnderAttack
+    UnderAttack,
+	KillingMove
 }

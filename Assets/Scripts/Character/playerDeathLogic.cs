@@ -17,6 +17,9 @@ public class playerDeathLogic : MonoBehaviour {
 	} 
 
 	public void die() {
+
+		// TODO: active death animation.
+
 		AutoFade.FadeOut (Color.black, moveCharPosition);		
 	}
 

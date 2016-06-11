@@ -33,8 +33,8 @@ public class HPLogic : MonoBehaviour {
         //Debug.Log("updatedCurrentHP");
 
         currentHp = hp;
-		CameraUtils.Instance.blinkCamera();
-		CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
+
+		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
         
     }
 
