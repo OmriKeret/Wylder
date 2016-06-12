@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public abstract class Enemy : MonoBehaviour {
+public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected const int MAX_HP = 5;
     protected const int UNREACHABLE = 0, CLIMB = 1, JUMP = 2, FLOOR = 3;
@@ -12,6 +12,8 @@ public abstract class Enemy : MonoBehaviour {
 
     protected int currentHp;
     protected Rigidbody2D _rigidbody;
+    protected bool inCombat;
+    protected eCharState state;
 
     public GameObject raysCollection;
     [Range(0, 10)]
@@ -52,7 +54,7 @@ public abstract class Enemy : MonoBehaviour {
     {
         rays = raysCollection.GetComponentsInChildren<Transform>().Where(child=> child != raysCollection.transform).ToList<Transform>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        layerMask = ~(1 << LayerMask.NameToLayer("bones"));
+        layerMask = ~(1 << LayerMask.NameToLayer("bones")) & ~(1 << LayerMask.NameToLayer("camera")) & ~(1 << LayerMask.NameToLayer("PlayerExternal"));
         distToGround = rays[FLOOR].transform.position.y;
 
     }
@@ -61,9 +63,16 @@ public abstract class Enemy : MonoBehaviour {
     {
         if (!halt)
         {
-            Raycastion();
-            Behaviours();
-            UpdateAnimation();
+            if (inCombat)
+            {
+
+            }
+            else
+            {
+                Raycastion();
+                Behaviours();
+                UpdateAnimation();
+            }
         }
     }
 
@@ -73,12 +82,12 @@ public abstract class Enemy : MonoBehaviour {
         rays.ForEach(ray =>
         {
             Debug.DrawLine(ray.position, ray.position + raysDelta, Color.blue);
-            raysCurrentHit.Add(Physics2D.Linecast(ray.position, ray.position + raysDelta, layerMask));
+            RaycastHit2D g = Physics2D.Linecast(ray.position, ray.position + raysDelta, layerMask);
+            raysCurrentHit.Add(g);
         });
 
         Debug.DrawLine(rays[FLOOR].position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f , Color.blue);
         isGrounded = Physics2D.Linecast(transform.position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f, layerMask);
-        Debug.Log(string.Format("Grounded: {0}",isGrounded));
     }
 
     protected void Behaviours()
@@ -98,7 +107,7 @@ public abstract class Enemy : MonoBehaviour {
         
     }
 
-    IEnumerator Wait(int seconds)
+    IEnumerator FlipAndWait(int seconds)
     {
         halt = true;
         yield return new WaitForSeconds(seconds);
@@ -129,7 +138,6 @@ public abstract class Enemy : MonoBehaviour {
         {
             _rigidbody.AddForce(speed, ForceMode2D.Force);
         }
-        animator.SetBool("Run", speed.magnitude > 2);
     }
 
     protected virtual void Climb()
@@ -173,9 +181,8 @@ public abstract class Enemy : MonoBehaviour {
         }
         else
         {
-            StartCoroutine(Wait(2));
-            //Flip();
-            //StartCoroutine(Wait(1));
+            _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+            StartCoroutine(FlipAndWait(2));
         }
         
     }
@@ -204,5 +211,41 @@ public abstract class Enemy : MonoBehaviour {
         {
             Move(RunForce);
         }
+    }
+
+    public eCharState GetState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ActiveHitAnimation()
+    {
+        animator.SetTrigger("GotHit");
+    }
+
+    public void ActiveDeathAnimation()
+    {
+        animator.SetTrigger("Death");
+    }
+
+    public void ActiveHitSound()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ActiveDeathSound()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Hit(int dmg)
+    {
+        currentHp -= dmg;
+        return currentHp > 0;
+    }
+
+    public void ActiveCounterAnimation()
+    {
+        throw new NotImplementedException();
     }
 }
