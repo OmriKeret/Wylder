@@ -8,7 +8,7 @@ public class CollisionFacade {
 	public Dictionary< PairModel<string,string>,Action<GameObject, GameObject>>  collisionDictionary;
 
 	public CollisionFacade() {
-		collisionLogic = GameObject.Find("Logic").GetComponent<CollisionLogic>();
+		collisionLogic = new CollisionLogic();
 		buildDictionray ();
 	}
 
@@ -31,6 +31,7 @@ public class CollisionFacade {
 		return;
 	}
 	public void Collision(GameObject mainCollider, GameObject collidedWith) {
+		Debug.Log ("We got a collision between: " + mainCollider.tag + " and " + collidedWith.tag);
 		var pair = PairModel.New<string,string> (mainCollider.tag, collidedWith.tag);
 		if (collisionDictionary.ContainsKey (pair)) {
 			collisionDictionary [pair].Invoke (mainCollider, collidedWith);

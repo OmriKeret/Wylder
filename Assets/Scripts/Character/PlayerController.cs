@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour {
 		collisionFacade = new CollisionFacade();
 	}
 	
-	public void OnCollisionEnter2D(Collision2D col)
-	{
-		collisionFacade.Collision(this.gameObject, col.gameObject);
+	public void OnTriggerEnter2D(Collider2D col) {
+		Debug.Log ("Collision detected");
+			collisionFacade.Collision(this.gameObject, col.gameObject);
 	}
 }

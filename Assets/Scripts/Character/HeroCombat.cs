@@ -168,6 +168,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	public bool Hit (int dmg)
 	{
+		Debug.Log ("Player got hit!");
 		CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 		CameraUtils.Instance.blinkCamera();
 		animationLogic.Hit ();
@@ -184,6 +185,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	// The meaning here is active killing move animation, as the counter succeeded
 	public void ActiveCounterAnimation ()
 	{
+		Debug.Log ("Player countered successfully!");
 		counterSuccess ();
 	}
 
