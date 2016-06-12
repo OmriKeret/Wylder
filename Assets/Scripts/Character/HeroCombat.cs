@@ -37,7 +37,9 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	void Update() 
 	{
 		string currentAnimation = GetCurrentAnimatorStateName ();
-		if (currentAnimation.StartsWith ("Attack")) {
+		if (deathLogic.dying) {
+			playerState = eCharState.dead;
+		} else if(currentAnimation.StartsWith ("Attack")) {
 			playerState = eCharState.Attacking;
 		} else if (currentAnimation.StartsWith ("Counter")) {
 			playerState = eCharState.Countering;
@@ -170,7 +172,12 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		CameraUtils.Instance.blinkCamera();
 		animationLogic.Hit ();
 		playerState = eCharState.UnderAttack;
-		return playerStats.hit (dmg);
+		if (playerStats.hit (dmg)) {
+			deathLogic.die ();
+			return true;
+		}
+		return false;
+
 
 	}
 
@@ -182,12 +189,20 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	#endregion
 
+	/*
+	 * Method used by player controller in order to know when to block input
+	 * */
 	public bool IsStablizie() 
 	{
 		if (playerState == eCharState.Attacking) {
 			return true;
 		}
 		return false;
+	}
+
+	public int getAttackStrength() {
+		// TODO: get the stats from somewhere.
+		return 1;
 	}
 
 }

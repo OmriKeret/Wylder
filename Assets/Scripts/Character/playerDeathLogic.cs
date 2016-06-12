@@ -5,6 +5,8 @@ public class playerDeathLogic : MonoBehaviour {
 
 	public Vector3 respawnTo;
 	private int currentCheckpointNum = -1;
+	public bool dying = false;
+
 	// Use this for initialization
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag.Equals ("checkpoint")) {
@@ -17,7 +19,7 @@ public class playerDeathLogic : MonoBehaviour {
 	} 
 
 	public void die() {
-
+		dying = true;
 		// TODO: active death animation.
 
 		AutoFade.FadeOut (Color.black, moveCharPosition);		
@@ -25,6 +27,7 @@ public class playerDeathLogic : MonoBehaviour {
 
 	private void moveCharPosition() {
 		this.transform.position = respawnTo;
+		dying = false;
 		AutoFade.FadeIn (null);
 	}
 }
