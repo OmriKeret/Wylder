@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected eCharState state;
 
     public GameObject raysCollection;
+    public bool FaceRight;
     [Range(0, 10)]
     public float raySize;
     [Range (0,100)]
@@ -26,18 +27,20 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public float ClimbMaxSpeed;
     [Range(0, 100)]
     public float JumpForce;
+    [Range(0, 10)]
+    public int FramePerJump;
 
     protected List<Transform> rays;
     protected List<bool> raysCurrentHit;
     protected bool m_FacingRight = true;
     float distToGround;
     protected int layerMask;
+    protected int currentFPJ;
 
     protected Animator animator;
 
     //States
     protected bool isGrounded;
-    protected bool isClimbing;
 
     //Counters
     protected bool halt = false;
@@ -56,7 +59,9 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         _rigidbody = GetComponent<Rigidbody2D>();
         layerMask = ~(1 << LayerMask.NameToLayer("bones")) & ~(1 << LayerMask.NameToLayer("camera")) & ~(1 << LayerMask.NameToLayer("PlayerExternal"));
         distToGround = rays[FLOOR].transform.position.y;
-
+        currentFPJ = 0;
+        if (!FaceRight)
+            raysDelta *= -1;
     }
 
     protected virtual void Update()
@@ -88,6 +93,9 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
         Debug.DrawLine(rays[FLOOR].position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f , Color.blue);
         isGrounded = Physics2D.Linecast(transform.position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f, layerMask);
+
+        if (currentFPJ > 0)
+            currentFPJ--;
     }
 
     protected void Behaviours()
@@ -122,7 +130,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected virtual void Move(float velocity)
     {
-        Move(velocity, 0);
+        Move(velocity , 0);
     }
 
     protected virtual void Move(float xv, float yv)
@@ -140,23 +148,24 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         }
     }
 
-    protected virtual void Climb()
-    {
-        isClimbing = true;
-        if (_rigidbody.velocity.y <= ClimbMaxSpeed)
-        {
-            _rigidbody.AddForce(Vector2.up* ClimbMaxSpeed, ForceMode2D.Force);
-        }
+    //protected virtual void Climb()
+    //{
+    //    isClimbing = true;
+    //    if (_rigidbody.velocity.y <= ClimbMaxSpeed)
+    //    {
+    //        _rigidbody.AddForce(Vector2.up* ClimbMaxSpeed, ForceMode2D.Force);
+    //    }
         
-    }
+    //}
 
     protected virtual void Jump(float force)
     {
-        if (!isGrounded || isClimbing)
+        if (!isGrounded || currentFPJ > 0)
         {
             return;
         }
-        _rigidbody.AddForce(new Vector2(_rigidbody.velocity.x * 0.2f, _rigidbody.velocity.x).normalized * force, ForceMode2D.Impulse);
+        _rigidbody.AddForce(new Vector2(0,force), ForceMode2D.Impulse);
+        currentFPJ = FramePerJump;
     }
 
     protected virtual void Flip()
@@ -194,18 +203,13 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             turnAround();
             Debug.Log(rays[UNREACHABLE].name);
         }
-        else if (raysCurrentHit[CLIMB] && false) //Currently inactive!
-        {
-            Climb();
-        }
         else if (raysCurrentHit[JUMP])
         {
             Jump(JumpForce);
         }
         else if (raysCurrentHit[FLOOR])
         {
-            Debug.Log("Floor");
-            Move(RunForce, 30);
+            Move(RunForce*3, RunForce*3);
         }
         else
         {
@@ -245,6 +249,11 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     }
 
     public void ActiveCounterAnimation()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getAttackStrength()
     {
         throw new NotImplementedException();
     }
