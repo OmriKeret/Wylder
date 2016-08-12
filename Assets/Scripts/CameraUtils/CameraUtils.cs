@@ -8,7 +8,7 @@ public class CameraUtils : MonoBehaviour {
 	public SpriteRenderer cameraRedBlur;
 	public SpriteRenderer cameraRedFilter;
 
-	public bool blink = true;
+	public bool blink = false;
 	public bool increment = true;
 	public float opac = 0.8f;
 
@@ -44,6 +44,7 @@ public class CameraUtils : MonoBehaviour {
 	void Update () {
 
 		if (blink) {
+			Debug.Log ("Camera blink");
 			Color aColor = cameraRedBlur.color;
 			if (increment == true) {    
 				aColor.a += opac * Time.deltaTime / blinkLen;
