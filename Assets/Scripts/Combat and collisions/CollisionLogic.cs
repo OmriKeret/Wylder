@@ -16,7 +16,7 @@ public class CollisionLogic  {
 	 * */
 	public void EnemyCollidedWithPlayer(GameObject enemy, GameObject player) {
     
-		var playerCollider = player.GetComponent<ICharCollider>();
+		var playerCollider = player.GetComponentInParent <ICharCollider>();
 		var enemyCollider = enemy.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
 		var enemyState = enemyCollider.GetState();
@@ -40,7 +40,7 @@ public class CollisionLogic  {
 	 * Invoked when enemy colides with player, player attack enemy logic.
 	 * */
 	public void playerCollideWithEnemy(GameObject player, GameObject enemy) {
-		var playerCollider = player.GetComponent<ICharCollider>();
+		var playerCollider = player.GetComponentInParent <ICharCollider>();
 		var enemyCollider = enemy.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
 		var enemyState = enemyCollider.GetState();

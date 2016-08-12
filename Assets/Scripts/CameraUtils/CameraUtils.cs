@@ -6,10 +6,17 @@ public class CameraUtils : MonoBehaviour {
 
 
 	public SpriteRenderer cameraRedBlur;
+	public SpriteRenderer cameraRedFilter;
+
 	public bool blink = true;
 	public bool increment = true;
 	public float opac = 0.8f;
+
 	public float blinkLen = 0.3f;
+	public float regLen = 5f;
+	private float baseOpacity = 0f;
+
+	public bool regeneration;
 
 	public static CameraUtils m_Instance = null;
 
@@ -25,58 +32,29 @@ public class CameraUtils : MonoBehaviour {
 		}
 	}
 
-	private void Awake() {
+	public void Awake() {
+		cameraRedBlur = GameObject.Find ("CameraContainer/Camera/Redblur").GetComponent<SpriteRenderer> ();
+		cameraRedFilter = GameObject.Find ("CameraContainer/Camera/redFilter").GetComponent<SpriteRenderer> ();
+			
 		DontDestroyOnLoad(this);
 		m_Instance = this;
 	}
-		
 
-	private void Start() {
-		cameraRedBlur = GameObject.Find ("CameraContainer/Camera/Redblur").GetComponent<SpriteRenderer> ();
-	}
 
 	void Update () {
 
-//		if (alarm)
-//		{        
-//			Color aColor = cameraRedBlur.color;
-//			if (increment == true) 
-//			{    
-//				aColor.a += opac*Time.deltaTime/blurLen;
-//
-//			} else
-//			{
-//				aColor.a -= opac*Time.deltaTime/blurLen;
-//			}
-//
-//			if (aColor.a > opac) 
-//			{
-//				increment = false;
-//			} else if (aColor.a < 0f)
-//			{
-//				increment = true;
-//			}
-//
-//			cameraRedBlur.color = aColor;
-//		}
-
 		if (blink) {
 			Color aColor = cameraRedBlur.color;
-			if (increment == true) 
-			{    
-				aColor.a += opac*Time.deltaTime/blinkLen;
+			if (increment == true) {    
+				aColor.a += opac * Time.deltaTime / blinkLen;
 
-			} else
-			{
-				aColor.a -= opac*Time.deltaTime/blinkLen;
+			} else {
+				aColor.a -= opac * Time.deltaTime / blinkLen;
 			}
 
-			if (aColor.a > opac) 
-			{
+			if (aColor.a > opac) {
 				increment = false;
-			} else if (aColor.a < 0f)
-			{
-				increment = true;
+			} else if (aColor.a < 0f) {
 				blink = false;
 			}
 
@@ -85,13 +63,20 @@ public class CameraUtils : MonoBehaviour {
 	}
 
 	public void blinkCamera() {
+		regeneration = false;
 		Instance.blink = true;
-		Color aColor = cameraRedBlur.color;
-		aColor.a = 0;
-		cameraRedBlur.color = aColor;
 		increment = true;
-
-
+		Color aColor = cameraRedBlur.color;
+		aColor.a = 0f;
+		cameraRedBlur.color = aColor;
 	}
+
+	public void changeOpecity(float ope) {
+		Debug.Log (ope);
+		Color aColor = cameraRedFilter.color;
+		aColor.a = ope;
+		cameraRedFilter.color = aColor;
+	}
+		
 
 }

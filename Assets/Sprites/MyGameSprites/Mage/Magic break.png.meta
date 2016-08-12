@@ -1,0 +1,234 @@
+fileFormatVersion: 2
+guid: 965df16c219978142b3c4b98770512ef
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Magic break_0
+    21300002: Magic break_1
+    21300004: Magic break_2
+    21300006: Magic break_3
+    21300008: Magic break_4
+    21300010: Magic break_5
+    21300012: Magic break_6
+    21300014: Magic break_7
+    21300016: Magic break_8
+    21300018: Magic break_9
+    21300020: Magic break_10
+    21300022: Magic break_11
+    21300024: Magic break_12
+    21300026: Magic break_13
+    21300028: Magic break_14
+    21300030: Magic break_15
+    21300032: Magic break_16
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Magic break_0
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 1271
+        width: 14
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_1
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 1261
+        width: 29
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_2
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 1258
+        width: 37
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_3
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 1258
+        width: 38
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_4
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 1247
+        width: 86
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_5
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 1243
+        width: 102
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_6
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 1223
+        width: 151
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_7
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 1201
+        width: 182
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_8
+      rect:
+        serializedVersion: 2
+        x: 1553
+        y: 1195
+        width: 193
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_9
+      rect:
+        serializedVersion: 2
+        x: 1785
+        y: 1213
+        width: 155
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_10
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1019
+        width: 116
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_11
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 1037
+        width: 76
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_12
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 1046
+        width: 38
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_13
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 1052
+        width: 25
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_14
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 1056
+        width: 16
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_15
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 1059
+        width: 11
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Magic break_16
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 1059
+        width: 8
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

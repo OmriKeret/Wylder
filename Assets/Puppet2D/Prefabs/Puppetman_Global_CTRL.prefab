@@ -1276,12 +1276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fc74be5d0ea434fa84a6add19b6c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poleVector: {fileID: 400070}
-  AimDirection: {x: 0, y: 0, z: 1}
-  UpDirection: {x: 1, y: 0, z: 0}
   Flip: 1
   SquashAndStretch: 0
   Scale: 0
+  AimDirection: {x: 0, y: 0, z: 1}
+  poleVector: {fileID: 400070}
+  UpDirection: {x: 1, y: 0, z: 0}
   scaleStart:
   - {x: 1.1051408, y: 1.1051408, z: 1.105141}
   - {x: 1.4410427, y: 1.4410425, z: 1.4410425}
@@ -1289,6 +1289,18 @@ MonoBehaviour:
   middleJointTransform: {fileID: 400010}
   bottomJointTransform: {fileID: 400042}
   OffsetScale: {x: 0.04180312, y: 0.04180312, z: 0.04180312}
+  numberIkBonesIndex: 0
+  numberOfBones: 4
+  iterations: 10
+  damping: 1
+  IKControl: {fileID: 0}
+  endTransform: {fileID: 0}
+  startTransform: {fileID: 0}
+  bindPose: []
+  bindBones: []
+  limitBones: 1
+  angleLimitTransform: []
+  angleLimits: []
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1322,12 +1334,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fc74be5d0ea434fa84a6add19b6c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poleVector: {fileID: 400058}
-  AimDirection: {x: 0, y: 0, z: 1}
-  UpDirection: {x: 1, y: 0, z: 0}
   Flip: 0
   SquashAndStretch: 0
   Scale: 0
+  AimDirection: {x: 0, y: 0, z: 1}
+  poleVector: {fileID: 400058}
+  UpDirection: {x: 1, y: 0, z: 0}
   scaleStart:
   - {x: 1.143839, y: 1.1438395, z: 1.1438392}
   - {x: 0.9434039, y: 0.94340366, z: 0.943404}
@@ -1335,6 +1347,18 @@ MonoBehaviour:
   middleJointTransform: {fileID: 400026}
   bottomJointTransform: {fileID: 400060}
   OffsetScale: {x: 0.06241597, y: 0.06241597, z: 0.06241597}
+  numberIkBonesIndex: 0
+  numberOfBones: 4
+  iterations: 10
+  damping: 1
+  IKControl: {fileID: 0}
+  endTransform: {fileID: 0}
+  startTransform: {fileID: 0}
+  bindPose: []
+  bindBones: []
+  limitBones: 1
+  angleLimitTransform: []
+  angleLimits: []
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1346,12 +1370,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fc74be5d0ea434fa84a6add19b6c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poleVector: {fileID: 400050}
-  AimDirection: {x: 0, y: 0, z: 1}
-  UpDirection: {x: 1, y: 0, z: 0}
   Flip: 0
   SquashAndStretch: 0
   Scale: 0
+  AimDirection: {x: 0, y: 0, z: 1}
+  poleVector: {fileID: 400050}
+  UpDirection: {x: 1, y: 0, z: 0}
   scaleStart:
   - {x: 0.9045902, y: 0.90459037, z: 0.9045903}
   - {x: 0.95257646, y: 0.9525764, z: 0.9525765}
@@ -1359,6 +1383,18 @@ MonoBehaviour:
   middleJointTransform: {fileID: 400028}
   bottomJointTransform: {fileID: 400082}
   OffsetScale: {x: 0.07816402, y: 0.07816402, z: 0.07816402}
+  numberIkBonesIndex: 0
+  numberOfBones: 4
+  iterations: 10
+  damping: 1
+  IKControl: {fileID: 0}
+  endTransform: {fileID: 0}
+  startTransform: {fileID: 0}
+  bindPose: []
+  bindBones: []
+  limitBones: 1
+  angleLimitTransform: []
+  angleLimits: []
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1370,12 +1406,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fc74be5d0ea434fa84a6add19b6c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poleVector: {fileID: 400048}
-  AimDirection: {x: 0, y: 0, z: 1}
-  UpDirection: {x: 1, y: 0, z: 0}
   Flip: 1
   SquashAndStretch: 0
   Scale: 0
+  AimDirection: {x: 0, y: 0, z: 1}
+  poleVector: {fileID: 400048}
+  UpDirection: {x: 1, y: 0, z: 0}
   scaleStart:
   - {x: 1.2567939, y: 1.2567942, z: 1.2567941}
   - {x: 1.1209307, y: 1.1209309, z: 1.1209308}
@@ -1383,6 +1419,18 @@ MonoBehaviour:
   middleJointTransform: {fileID: 400056}
   bottomJointTransform: {fileID: 400014}
   OffsetScale: {x: 0.04725637, y: 0.04725637, z: 0.04725637}
+  numberIkBonesIndex: 0
+  numberOfBones: 4
+  iterations: 10
+  damping: 1
+  IKControl: {fileID: 0}
+  endTransform: {fileID: 0}
+  startTransform: {fileID: 0}
+  bindPose: []
+  bindBones: []
+  limitBones: 1
+  angleLimitTransform: []
+  angleLimits: []
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1481,7 +1529,9 @@ MonoBehaviour:
   CombineMeshes: 1
   flip: 0
   AutoRefresh: 1
-  ControlScriptsEnabled: 1
+  ControlsEnabled: 1
+  lateUpdate: 1
+  _flipCorrection: 1
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1493,6 +1543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a653489e23bfc9d459ccae28b8f68df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetAmount: {x: 0, y: 0}
+  uvsDefault: []
+  initialized: 0
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

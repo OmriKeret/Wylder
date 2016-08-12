@@ -14,6 +14,7 @@ public class PlayerStatsLogic : MonoBehaviour {
 	public float timeToGenerateFromEmptyToFull = 5f;
 	private float timeToFullHealthFromCurrentHealth = 5f;
 	private float t = 0;
+
     //GUI
     HPLogic healthLogic;
     StaminaBarLogic staminaBar;
@@ -38,10 +39,14 @@ public class PlayerStatsLogic : MonoBehaviour {
 		if (Time.time - lastTimeHitted >= timeToStartGeneration) {
 			t += Time.deltaTime / timeToFullHealthFromCurrentHealth;
 			HP = Mathf.Lerp(HP, maxHP, t);
-
+			Debug.Log ((float)(HP / maxHP));
+			CameraUtils.Instance.changeOpecity(1f - (float)(HP/maxHP));
 		}
 	}
 
+	/**
+	 * Return true if player dies
+	 * */
 	public bool hit(int force) {
 		lastTimeHitted = Time.time;
 
@@ -52,11 +57,12 @@ public class PlayerStatsLogic : MonoBehaviour {
 		Debug.Log("lost health, current Health: " + HP);
 		if (HP > 0) {
 			healthLogic.reduceHpTo (HP);
-			return true;
+			CameraUtils.Instance.changeOpecity(1f - (float)(HP/maxHP));
+			return false;
 		} else {
 			// Player is dead.
 			healthLogic.reduceHpTo (HP);
-			return false;
+			return true;
 		}
 	}
 	

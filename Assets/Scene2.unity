@@ -167,7 +167,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 71958466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.58, y: 4.45, z: -34.21}
+  m_LocalPosition: {x: 13.58, y: 4.45, z: -13.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 71958466}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
   m_Name: 
@@ -827,11 +827,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raysCollection: {fileID: 782920776}
   FaceRight: 1
-  raySize: 2.5
-  MaxVelocity: 5.9
-  RunForce: 10.5
+  raySize: 2.58
+  MaxVelocity: 9.2
+  RunForce: 12.2
   ClimbMaxSpeed: 0
-  JumpForce: 15
+  JumpForce: 16.6
   FramePerJump: 10
 --- !u!61 &1141263090
 BoxCollider2D:
@@ -1835,7 +1835,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 116754, guid: d0edf9a3e1a42fc44b0ff793e64efd54, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0edf9a3e1a42fc44b0ff793e64efd54, type: 2}
@@ -1896,7 +1896,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1831821059}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.91, y: 9.99, z: 0}
+  m_LocalPosition: {x: 12, y: 9.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

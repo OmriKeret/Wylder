@@ -18,9 +18,6 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	//Player state.
 	private eCharState playerState;
 
-	//Name table for animation state.
-	public string[] AnimatorStateNames = {"Jump","Land", "RunStop", "Slide", "Run", "Walk", "Roll", "Attack", "Walk__Combat", "Idle_Combat", "runAttack"};
-	private Dictionary<int, string> NameTable { get; set; }
 
 	private void Awake()
 	{
@@ -30,13 +27,12 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		deathLogic = GetComponent<playerDeathLogic> ();
 		playerStats = GetComponent<PlayerStatsLogic> ();
 		animationLogic = GetComponent<PlatformerAnimation2D> ();
-		BuildNameTable ();
 	}
 
 	// Mainly used to synchornize player animation and state.
 	void Update() 
 	{
-		string currentAnimation = GetCurrentAnimatorStateName ();
+		string currentAnimation = animationLogic.GetCurrentAnimatorStateName ();
 		if (deathLogic.dying) {
 			playerState = eCharState.dead;
 		} else if(currentAnimation.StartsWith ("Attack")) {
@@ -53,37 +49,12 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 			playerState = eCharState.Default;
 		}
 	}
-	#region Animation playing test region.
-	private void BuildNameTable()
-	{
-		NameTable = new Dictionary<int, string>();
 
-		foreach (string stateName in AnimatorStateNames)
-		{
 
-			NameTable[Animator.StringToHash(stateName)] = stateName;
-		}
-	}
 
-	public string GetCurrentAnimatorStateName()
-	{
-		AnimatorStateInfo stateInfo = m_Anim.GetCurrentAnimatorStateInfo(0);
 
-		string stateName;
-		if (NameTable.TryGetValue(stateInfo.shortNameHash, out stateName))
-		{
-			return stateName;
-		}
-		else
-		{
-			Debug.LogWarning("Unknown animator state name.");
-			return string.Empty;
-		}
-	}
-
-	#endregion
 	public bool isAttacking() {
-		return GetCurrentAnimatorStateName ().StartsWith ("Attack");
+		return animationLogic.isAttacking ();
 	}
 
 	public void attack() 
