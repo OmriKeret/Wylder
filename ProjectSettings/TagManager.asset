@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - checkpoint
   - Bullet
+  - Fire
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - controllers
   - charAlign
   - camera
-  - 
+  - Forground
   - 
   - 
   - 
@@ -57,9 +58,6 @@ TagManager:
   - name: Front background
     uniqueID: 3190169725
     locked: 0
-  - name: Forground
-    uniqueID: 498396539
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -74,6 +72,9 @@ TagManager:
     locked: 0
   - name: controllers
     uniqueID: 2541641535
+    locked: 0
+  - name: Forground
+    uniqueID: 498396539
     locked: 0
   - name: background front
     uniqueID: 627528915
