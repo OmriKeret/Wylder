@@ -14,8 +14,6 @@ public class endLevel : MonoBehaviour {
 	}
 
 
-
-
 	public void loadNextLevel() {
 		Application.LoadLevel(levelToLoad);	
 	}	
