@@ -14,15 +14,16 @@ public class PlayerController : MonoBehaviour {
 	void Update() {
 		
 	}
+
 	public void OnTriggerEnter2D(Collider2D col) {
 		Debug.Log ("Collision trigger detected");
-	//		collisionFacade.Collision(this.gameObject, col.gameObject);
+		collisionFacade.Collision(this.gameObject, col.gameObject);
 	}
 
 	public void OnCollisionEnter2D(Collision2D col)
 	{
 		Debug.Log ("Collision detected");
-		collisionFacade.Collision(this.gameObject, col.gameObject);
+		//collisionFacade.Collision(this.gameObject, col.gameObject);
 	}
 
 

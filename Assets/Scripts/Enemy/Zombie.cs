@@ -7,6 +7,7 @@ public class Zombie : Enemy {
 
     private static List<string> attacksNames;
     private static System.Random random = new System.Random();
+	private CollisionFacade collisionFacade; // This is used for the collisions.
 
     public override void Awake()
     {
@@ -16,6 +17,7 @@ public class Zombie : Enemy {
 
     public override void Start () {
         base.Start();
+		collisionFacade = new CollisionFacade();
     }
 	
 	protected override void FixedUpdate () {
@@ -23,19 +25,20 @@ public class Zombie : Enemy {
         
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-		Debug.Log ("Enemy recived collision");
-        if (coll.gameObject == playerObj)
-        {
-            
-            Debug.Log("Boom!");
-        }
-    }
+	// Commented this out because we use triggers.
+//    void OnCollisionEnter2D(Collision2D coll)
+//    {
+//		Debug.Log ("Enemy recived collision");
+//        if (coll.gameObject == playerObj)
+//        {
+//            
+//            Debug.Log("Boom!");
+//        }
+//    }
 
 	public void OnTriggerEnter2D(Collider2D col) {
 		Debug.Log ("Enemy collision trigger detected");
-		//		collisionFacade.Collision(this.gameObject, col.gameObject);
+		collisionFacade.Collision(this.gameObject, col.gameObject);
 	}
 
 
