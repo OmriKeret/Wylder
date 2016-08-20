@@ -39,7 +39,6 @@ public class PlayerStatsLogic : MonoBehaviour {
 		if (Time.time - lastTimeHitted >= timeToStartGeneration) {
 			t += Time.deltaTime / timeToFullHealthFromCurrentHealth;
 			HP = Mathf.Lerp(HP, maxHP, t);
-			Debug.Log ((float)(HP / maxHP));
 			CameraUtils.Instance.changeOpecity(1f - (float)(HP/maxHP));
 		}
 	}

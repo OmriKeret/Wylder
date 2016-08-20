@@ -36,7 +36,6 @@ public class CameraUtils : MonoBehaviour {
 		cameraRedBlur = GameObject.Find ("CameraContainer/Camera/Redblur").GetComponent<SpriteRenderer> ();
 		cameraRedFilter = GameObject.Find ("CameraContainer/Camera/redFilter").GetComponent<SpriteRenderer> ();
 			
-		DontDestroyOnLoad(this);
 		m_Instance = this;
 	}
 
@@ -73,7 +72,6 @@ public class CameraUtils : MonoBehaviour {
 	}
 
 	public void changeOpecity(float ope) {
-		Debug.Log (ope);
 		Color aColor = cameraRedFilter.color;
 		aColor.a = ope;
 		cameraRedFilter.color = aColor;

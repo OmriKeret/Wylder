@@ -58,8 +58,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 463546}
   - 20: {fileID: 2074124}
-  - 114: {fileID: 11409612}
-  - 114: {fileID: 11470748}
+  - 114: {fileID: 11420390}
+  - 114: {fileID: 11429248}
+  - 114: {fileID: 11408798}
   m_Layer: 0
   m_Name: CameraContainer
   m_TagString: Untagged
@@ -145,7 +146,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5343828, y: -7.8, z: -21.53}
+  m_LocalPosition: {x: 8.6, y: 0.4, z: -27.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489062}
@@ -222,7 +223,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.18814877, g: 0.44667912, b: 0.85294116, a: 0.019607844}
+  m_BackGroundColor: {r: 0.053416956, g: 0.1397059, b: 0.05033521, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -231,10 +232,10 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 20.2
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -261,43 +262,35 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175814}
   m_Enabled: 1
---- !u!114 &11409612
+--- !u!114 &11408798
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159418}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83d8db0ec466c14429f58c68c16398a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ac0ec3d6ad5f4a3d9d184bc3773a3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quality: 1
-  resolution: 4
-  simpleTweakMode: 1
-  focalPoint: 1
-  smoothness: 0.5
-  focalZDistance: 0
-  focalZStartCurve: 1
-  focalZEndCurve: 1
-  objectFocus: {fileID: 0}
-  focalSize: 0
-  bluriness: 2
-  maxBlurSpread: 1.75
-  foregroundBlurExtrude: 1.15
-  dofBlurShader: {fileID: 0}
-  dofShader: {fileID: 0}
-  visualize: 0
-  bokehDestination: 1
-  bokeh: 0
-  bokehSupport: 1
-  bokehShader: {fileID: 0}
-  bokehTexture: {fileID: 0}
-  bokehScale: 2.4
-  bokehIntensity: 0.15
-  bokehThresholdContrast: 0.1
-  bokehThresholdLuminance: 0.55
-  bokehDownsample: 1
+  ProCamera2D: {fileID: 11420390}
+  Strength: {x: 1, y: 1}
+  Duration: 0.25
+  Vibrato: 5
+  Randomness: 0.1
+  Smoothness: 0.1
+  InitialAngle: -1
+  UseRandomInitialAngle: 1
+  Rotation: {x: 0, y: 0, z: 0}
+  ShakePresets:
+  - Name: Shot
+    Strength: {x: 1, y: 1, z: 0}
+    Duration: 0.25
+    Vibrato: 5
+    Randomness: 0.1
+    Smoothness: 0.1
+    InitialAngle: -1
+    Rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &11417336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
   DefaultRotInfluence: {x: 1, y: 1, z: 1}
---- !u!114 &11470748
+--- !u!114 &11420390
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -319,14 +312,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 159418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b8c96e2cdc154e848a3d9fe62464d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  damping: 0.5
-  lookAheadFactor: 10
-  lookAheadReturnSpeed: 7
-  lookAheadMoveThreshold: 0
+  Axis: 0
+  FollowHorizontal: 1
+  FollowVertical: 1
+  GameCamera: {fileID: 2074124}
+  HorizontalFollowSmoothness: 0.15
+  VerticalFollowSmoothness: 0.15
+  LimitMaxHorizontalSpeed: 0
+  MaxHorizontalSpeed: 0.2
+  LimitMaxVerticalSpeed: 0
+  MaxVerticalSpeed: 0.2
+  ZoomWithFOV: 0
+  CameraTargets:
+  - TargetTransform: {fileID: 0}
+    TargetInfluenceH: 1
+    TargetInfluenceV: 1
+    TargetOffset: {x: 0, y: 0}
+  OverallOffset: {x: 0, y: 0}
+  UpdateType: 0
+  LimitHorizontalCameraDistance: 0
+  MaxHorizontalTargetDistance: 0.8
+  LimitVerticalCameraDistance: 0
+  MaxVerticalTargetDistance: 0.8
+  CenterTargetOnStart: 1
+  CurrentZoomTriggerID: 0
+  IsCameraPositionLeftBounded: 0
+  IsCameraPositionRightBounded: 0
+  IsCameraPositionTopBounded: 0
+  IsCameraPositionBottomBounded: 0
+--- !u!114 &11429248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17020d0b9b514c5ea3b8251d0c4ee6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProCamera2D: {fileID: 11420390}
+  Progressive: 1
+  SpeedMultiplier: 1
+  TransitionSmoothness: 0.5
+  MaintainInfluenceOnStop: 1
+  LeftFocus: 0.2
+  RightFocus: 0.2
+  TopFocus: 0.25
+  BottomFocus: 0.25
 --- !u!114 &11475226
 MonoBehaviour:
   m_ObjectHideFlags: 1

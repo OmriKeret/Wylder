@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PC2D;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class shooting : MonoBehaviour {
 
@@ -53,6 +54,7 @@ public class shooting : MonoBehaviour {
 
 	private void shoot() {
 		_animation.shootShot ();
+		ProCamera2DShake.Instance.ShakeUsingPreset("Shot");
 		Rigidbody2D bulletInstance = Instantiate(bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 1))) as Rigidbody2D;
 
 		if (_motor.facingLeft) {
