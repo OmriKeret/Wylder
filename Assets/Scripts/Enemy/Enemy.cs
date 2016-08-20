@@ -40,6 +40,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public int AttackForce;
 
     public float movement { get; private set; }
+    public float distanceCheckForSearch;
     public float distanceCheckForJump;
     public float distanceCheckForAttack;
     public List<LineCastModel> lineCastVectors;
@@ -53,6 +54,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public LayerMask restMask = 0xFFFF;
 
     protected GameObject playerObj;
+    protected eCharState combatSM;
 
     public virtual void Awake()
     {
@@ -75,15 +77,19 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             {PlatformerMotor2D.MotorState.Falling, Air }
         };
 
+        playerObj = FindObjectOfType<PlayerController2D>().gameObject;
+
         lineCastVectors = new List<LineCastModel>
         {
-            new LineCastModel() {MainObject = transform, Start = jumpMin, End = distanceCheckForJump * Vector2.right , Invoker = Jump, Mask = jumpMask},
-            new LineCastModel() {MainObject = transform, Start = jumpMax, End = distanceCheckForJump * Vector2.right , Invoker = Flip, Mask = jumpMask},
-            new LineCastModel() {MainObject = transform, Start = player, End = distanceCheckForAttack * Vector2.right , Invoker = Attack, Mask = playerMask},
-            new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2() , Invoker = Rest, Mask = 0},
+            new LineCastModel() {MainObject = transform, Start = player, TargetObject = playerObj.transform, Size = distanceCheckForSearch , Invoker = Patrol, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = jumpMin, End = Vector2.right, Size = distanceCheckForJump, Invoker = Jump, Mask = jumpMask},
+            new LineCastModel() {MainObject = transform, Start = jumpMax, End = Vector2.right, Size = distanceCheckForJump, Invoker = Flip, Mask = jumpMask},
+            new LineCastModel() {MainObject = transform, Start = player, End = Vector2.right, Size = distanceCheckForAttack, Invoker = Attack, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = Rest, Mask = 0},
         };
 
-        playerObj = FindObjectOfType<PlayerController2D>().gameObject;
+        
+        combatSM = eCharState.Default;
     }
 
     //protected virtual void Update()
@@ -203,7 +209,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected void Rest()
     {
         lineCastVectors[(int)eLineCaster.rest].Mask = restMask;
-        movement = 0;
+        _motor.normalizedXMovement = 0;
         animator.Play("IDLE");
         Debug.Log("Rest");
     }
@@ -221,7 +227,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public eCharState GetState()
     {
-        throw new NotImplementedException();
+        return combatSM;
+    }
+
+    public void ChangeCombatState(eCharState state)
+    {
+        combatSM = state;
     }
 
     public void ActiveHitAnimation()
@@ -247,6 +258,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public bool Hit(int dmg)
     {
         currentHp -= dmg;
+        Debug.Log("Hit enemy");
         return currentHp > 0;
     }
 
@@ -262,9 +274,10 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected enum eLineCaster
     {
-        minJump = 0,
+        searchPlayer = 0,
+        minJump,
         maxJump,
-        player,
+        attackPlayer,
         rest
     }
 }
