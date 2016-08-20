@@ -14,30 +14,19 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected Rigidbody2D _rigidbody;
     protected bool inCombat;
     protected eCharState state;
-
-    public GameObject raysCollection;
-    public bool FaceRight;
-    [Range(0, 10)]
-    public float raySize;
-    [Range (0,100)]
-    public float MaxVelocity;
-    [Range(0, 100)]
-    public float RunForce;
-    [Range(0, 100)]
-    public float ClimbMaxSpeed;
-    [Range(0, 100)]
-    public float JumpForce;
-    [Range(0, 10)]
-    public int FramePerJump;
+    protected Dictionary<PlatformerMotor2D.MotorState,Action> moveSM;
+    protected PlatformerMotor2D _motor;
 
     protected List<Transform> rays;
     protected List<bool> raysCurrentHit;
-    protected bool m_FacingRight = true;
+    public bool m_FacingRight = false;
     float distToGround;
     protected int layerMask;
     protected int currentFPJ;
 
     protected Animator animator;
+    protected PlatformerMotor2D.MotorState priorState;
+    protected System.Reflection.MethodInfo changeMotorState;
 
     //States
     protected bool isGrounded;
@@ -46,68 +35,80 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected bool halt = false;
     protected int walkingCounter = 0;
 
+
+    public float movement { get; private set; }
+    public float distanceCheckForJump;
+    public float distanceCheckForAttack;
+    public List<LineCastModel> lineCastVectors;
+    public Vector2 jumpMin;
+    public Vector2 jumpMax;
+    public Vector2 player;
+    protected bool isLanding;
+
+    protected static readonly LayerMask jumpMask = ~LayerMask.GetMask("bones", "EnemyWeapon");
+    protected static readonly LayerMask playerMask = LayerMask.GetMask("PlayerExternal");
+    protected static readonly LayerMask restMask = 0xFFFF;
+
     public virtual void Awake()
     {
         currentHp = MAX_HP;
         animator = GetComponent<Animator>();
-        raysDelta = new Vector3(raySize, 0, 0);
+        
     }
 
     public virtual void Start()
     {
-        rays = raysCollection.GetComponentsInChildren<Transform>().Where(child=> child != raysCollection.transform).ToList<Transform>();
-        _rigidbody = GetComponent<Rigidbody2D>();
-        layerMask = ~(1 << LayerMask.NameToLayer("bones")) & ~(1 << LayerMask.NameToLayer("camera")) & ~(1 << LayerMask.NameToLayer("PlayerExternal"));
-        distToGround = rays[FLOOR].transform.position.y;
-        currentFPJ = 0;
-        if (!FaceRight)
-            raysDelta *= -1;
+
+        _motor = GetComponent<PlatformerMotor2D>();
+        changeMotorState = typeof(PlatformerMotor2D).GetProperty("motorState").GetSetMethod(true);
+        
+        movement = -1;
+
+        moveSM = new Dictionary<PlatformerMotor2D.MotorState, Action> {
+            {PlatformerMotor2D.MotorState.OnGround,GroundRaycast },
+            {PlatformerMotor2D.MotorState.Jumping,Jump },
+            {PlatformerMotor2D.MotorState.Falling, Air }
+        };
+
+        lineCastVectors = new List<LineCastModel>
+        {
+            new LineCastModel() {MainObject = transform, Start = jumpMin, End = distanceCheckForJump * Vector2.right , Invoker = Jump, Mask = jumpMask},
+            new LineCastModel() {MainObject = transform, Start = jumpMax, End = distanceCheckForJump * Vector2.right , Invoker = Flip, Mask = jumpMask},
+            new LineCastModel() {MainObject = transform, Start = player, End = distanceCheckForJump * Vector2.right , Invoker = Attack, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2() , Invoker = Rest, Mask = 0},
+        };
     }
 
-    protected virtual void Update()
-    {
-        if (!halt)
-        {
-            if (inCombat)
-            {
+    //protected virtual void Update()
+    //{
+    //    if (!halt)
+    //    {
+    //        if (inCombat)
+    //        {
 
-            }
-            else
-            {
-                Raycastion();
-                Behaviours();
-                UpdateAnimation();
-            }
+    //        }
+    //        else
+    //        {
+    //            Raycastion();
+    //            Behaviours();
+    //            UpdateAnimation();
+    //        }
+    //    }
+    //}
+
+    protected virtual void FixedUpdate()
+    {
+        if (moveSM.Keys.Contains(_motor.motorState))
+        {
+            Debug.Log(_motor.motorState.ToString());
+            moveSM[_motor.motorState].Invoke();
         }
-    }
-
-    protected void Raycastion()
-    {
-        raysCurrentHit = new List<bool>();
-        rays.ForEach(ray =>
+        else
         {
-            Debug.DrawLine(ray.position, ray.position + raysDelta, Color.blue);
-            RaycastHit2D g = Physics2D.Linecast(ray.position, ray.position + raysDelta, layerMask);
-            raysCurrentHit.Add(g);
-        });
+            Debug.Log("Missing " + _motor.motorState);
+        }
 
-        Debug.DrawLine(rays[FLOOR].position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f , Color.blue);
-        isGrounded = Physics2D.Linecast(transform.position, (Vector2)rays[FLOOR].position - Vector2.up * 0.1f, layerMask);
-
-        if (currentFPJ > 0)
-            currentFPJ--;
-    }
-
-    protected void Behaviours()
-    {
-        Patrol();
-    }
-
-    private void UpdateAnimation()
-    {
-        animator.SetBool("Grounded", isGrounded);
-        animator.SetBool("InCombat", false);
-        animator.SetFloat("Velocity", Mathf.Abs(_rigidbody.velocity.x));
+        priorState = _motor.motorState;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -124,97 +125,94 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         halt = false;
     }
 
-    protected abstract int Attack();
+    protected abstract void Attack();
 
     protected abstract void Idle();
 
-    protected virtual void Move(float velocity)
-    {
-        Move(velocity , 0);
-    }
-
-    protected virtual void Move(float xv, float yv)
-    {
-        if (!isGrounded)
-        {
-            return;
-        }
-
-        xv *= m_FacingRight ? 1 : -1; //Flip velocity
-        Vector2 speed = new Vector2(xv, yv);
-        if (_rigidbody.velocity.magnitude <= MaxVelocity)
-        {
-            _rigidbody.AddForce(speed, ForceMode2D.Force);
-        }
-    }
-
-    //protected virtual void Climb()
-    //{
-    //    isClimbing = true;
-    //    if (_rigidbody.velocity.y <= ClimbMaxSpeed)
-    //    {
-    //        _rigidbody.AddForce(Vector2.up* ClimbMaxSpeed, ForceMode2D.Force);
-    //    }
-        
-    //}
-
-    protected virtual void Jump(float force)
-    {
-        if (!isGrounded || currentFPJ > 0)
-        {
-            return;
-        }
-        _rigidbody.AddForce(new Vector2(0,force), ForceMode2D.Impulse);
-        currentFPJ = FramePerJump;
-    }
-
     protected virtual void Flip()
     {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
 
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        Debug.Log("Flip");
+        if (movement < 0)
+            transform.rotation = new Quaternion(0, 180f, 0, 1);
+        else
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+        Vector3 scale = transform.localScale;
+        scale += new Vector3(0, 0, -2 * scale.z);
+        transform.localScale = scale;
+        movement *= -1;
+        lineCastVectors.ForEach((lineCaster) => lineCaster.Flip());
 
-        raysDelta *= -1;
     }
 
-    void turnAround()
+    protected virtual void GroundRaycast()
     {
-        float speed = _rigidbody.velocity.x;
-        if (speed > 0.5f)
+        _motor.fallFast = false;
+
+        Debug.Log("Movement " + movement);
+        lineCastVectors.ForEach((lineCaster) => lineCaster.Cast(false));
+        lineCastVectors.Reverse();
+        LineCastModel mostRelevantHit = null;
+        int hitCount = 0;
+        lineCastVectors.ForEach((lineCaster) =>
         {
-            Move(0.25f * speed);
-        }
+            if (lineCaster.CheckAndReset() && mostRelevantHit == null)
+            {
+                hitCount++;
+                Debug.Log("Hit " + hitCount);
+                mostRelevantHit = lineCaster;
+            }
+        });
+        lineCastVectors.Reverse();
+        if (mostRelevantHit == null) //No hit means the way is clear
+            Patrol();       
         else
-        {
-            _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
-            StartCoroutine(FlipAndWait(2));
-        }
-        
+            mostRelevantHit.Invoker.Invoke();
     }
 
     protected virtual void Patrol()
     {
-        if (raysCurrentHit[UNREACHABLE])
-        {
-            turnAround();
-            Debug.Log(rays[UNREACHABLE].name);
-        }
-        else if (raysCurrentHit[JUMP])
-        {
-            Jump(JumpForce);
-        }
-        else if (raysCurrentHit[FLOOR])
-        {
-            Move(RunForce*3, RunForce*3);
-        }
-        else
-        {
-            Move(RunForce);
-        }
+
+        _motor.normalizedXMovement = movement;
+        animator.Play("Run");
+        
+    }
+
+    protected void Jump()
+    {
+        _motor.Jump();
+        animator.Play("Jump");
+    }
+
+    protected void Air()
+    {
+        changeMotorState.Invoke(_motor, new object[] { PlatformerMotor2D.MotorState.Falling });
+        Debug.Log("Air");
+        animator.Play("Air");
+    }
+
+    protected void Land()
+    {
+        Debug.Log("Land");
+    }
+
+    protected void Rest()
+    {
+        lineCastVectors[(int)eLineCaster.rest].Mask = restMask;
+        movement = 0;
+        animator.Play("IDLE");
+        Debug.Log("Rest");
+    }
+
+    protected void WakeUp()
+    {
+        lineCastVectors[(int)eLineCaster.rest].Mask = 0;
+        Debug.Log("WakeUp");
+    }
+
+    protected void NowLanding(bool land)
+    {
+        isLanding = land;
     }
 
     public eCharState GetState()
@@ -256,5 +254,13 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public int getAttackStrength()
     {
         throw new NotImplementedException();
+    }
+
+    protected enum eLineCaster
+    {
+        minJump = 0,
+        maxJump,
+        player,
+        rest
     }
 }
