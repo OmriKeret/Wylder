@@ -7,9 +7,11 @@ using System;
 public class LineCastModel {
 
     public Transform MainObject { get; set; }
+    public Transform TargetObject { get; set; }
     public Vector2 Start { get; set; }
     public Vector2 End { get; set; }
     public Action Invoker { get; set; }
+    public float Size { get; set; }
     public LayerMask Mask { get; set; }
 
     private bool hit;
@@ -18,9 +20,15 @@ public class LineCastModel {
     {
         int dir = faceRight ? 1 : -1;
         #region Debug
-        Debug.DrawLine((Vector2) MainObject.position + Start, (Vector2)MainObject.position +  Start + End * dir, Color.red);
+        if (TargetObject == null)
+            Debug.DrawLine((Vector2)MainObject.position + Start, (Vector2)MainObject.position + Start + End * Size * dir, Color.red);
+        else
+            Debug.DrawLine((Vector2)MainObject.position + Start, (Vector2)MainObject.position + ((Vector2)TargetObject.position).normalized * Size * dir,Color.green);
         #endregion
-        hit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * dir,Mask);
+        if (TargetObject == null)
+            hit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * Size * dir,Mask);
+        else
+            hit = Physics2D.Linecast((Vector2)MainObject.position + Start, (Vector2)MainObject.position + Start + ((Vector2)TargetObject.position).normalized * Size * dir, Mask);
     }
 
     public void Flip()

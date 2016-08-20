@@ -42,8 +42,9 @@ public class CollisionLogic  {
 	 * Invoked when enemy colides with player, player attack enemy logic.
 	 * */
 	public void playerCollideWithEnemy(GameObject player, GameObject enemy) {
+        Debug.Log("Attacking enemy");
 		var playerCollider = player.GetComponentInParent <ICharCollider>();
-		var enemyCollider = enemy.GetComponent<ICharCollider>();
+		var enemyCollider = enemy.transform.root.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
 		var enemyState = enemyCollider.GetState();
 		var playerAttacking = (playerState == eCharState.Attacking);
@@ -52,6 +53,10 @@ public class CollisionLogic  {
 			// Enemy attacked player, and player can be attacked.
 			enemyCollider.Hit (playerCollider.getAttackStrength ());
 		}
+        else
+        {
+            Debug.Log(string.Format("Attack failed! {0} {1}", isAttackable(enemyState), playerState));
+        }
 
 	}
 

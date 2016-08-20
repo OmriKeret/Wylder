@@ -13,11 +13,12 @@ public class Zombie : Enemy {
     {
         base.Awake();
         attacksNames = new List<string> { "Attack1", "Attack2", "Attack3" };
+        collisionFacade = new CollisionFacade();
     }
 
     public override void Start () {
         base.Start();
-		collisionFacade = new CollisionFacade();
+		
     }
 	
 	protected override void FixedUpdate () {
@@ -62,5 +63,9 @@ protected override void Attack()
         
     }
 
+    public CollisionFacade GetCollisionFacade()
+    {
+        return collisionFacade;
+    }
 
 }
