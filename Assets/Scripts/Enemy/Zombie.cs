@@ -23,16 +23,17 @@ public class Zombie : Enemy {
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D coll)
     {
-        if (other.gameObject == playerObj)
+        if (coll.gameObject == playerObj)
         {
-            playerObj.GetComponent<ICharCollider>().Hit(AttackForce);
+            
             Debug.Log("Boom!");
         }
     }
 
-    protected override void Attack()
+
+protected override void Attack()
     {
         Debug.Log("Attacking");
         _motor.normalizedXMovement = 0;
