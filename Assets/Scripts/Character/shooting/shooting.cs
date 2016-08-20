@@ -35,7 +35,6 @@ public class shooting : MonoBehaviour {
 			timeLoading += Time.deltaTime;
 			_chargingShot = true;
 			chargeGlow.SetActive (true);
-			Debug.Log ("loading: " + timeLoading);
 		} else if (_chargingShot && timeLoading > 2f) {
 			timeLoading = 0;
 			chargeGlow.SetActive (false);

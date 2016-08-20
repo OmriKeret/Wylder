@@ -107,7 +107,6 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     {
         if (moveSM.Keys.Contains(_motor.motorState))
         {
-            Debug.Log(_motor.motorState.ToString());
             moveSM[_motor.motorState].Invoke();
         }
         else
@@ -156,7 +155,6 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     {
         _motor.fallFast = false;
 
-        Debug.Log("Movement " + movement);
         lineCastVectors.ForEach((lineCaster) => lineCaster.Cast(false));
         lineCastVectors.Reverse();
         LineCastModel mostRelevantHit = null;
@@ -166,7 +164,6 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             if (lineCaster.CheckAndReset() && mostRelevantHit == null)
             {
                 hitCount++;
-                Debug.Log("Hit " + hitCount);
                 mostRelevantHit = lineCaster;
             }
         });

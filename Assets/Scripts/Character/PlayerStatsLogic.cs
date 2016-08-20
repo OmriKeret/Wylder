@@ -39,7 +39,7 @@ public class PlayerStatsLogic : MonoBehaviour {
 		if (Time.time - lastTimeHitted >= timeToStartGeneration) {
 			t += Time.deltaTime / timeToFullHealthFromCurrentHealth;
 			HP = Mathf.Lerp(HP, maxHP, t);
-			CameraUtils.Instance.changeOpecity(1f - (float)(HP/maxHP));
+			CameraUtils.Instance.changeOpecity((1f - (float)(HP/maxHP)) * 0.8f);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class PlayerStatsLogic : MonoBehaviour {
 		Debug.Log("lost health, current Health: " + HP);
 		if (HP > 0) {
 			healthLogic.reduceHpTo (HP);
-			CameraUtils.Instance.changeOpecity(1f - (float)(HP/maxHP));
+			CameraUtils.Instance.changeOpecity((1f - (float)(HP/maxHP)) * 0.8f);
 			return false;
 		} else {
 			// Player is dead.

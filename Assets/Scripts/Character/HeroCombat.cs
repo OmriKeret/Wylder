@@ -4,6 +4,7 @@ using UnityStandardAssets._2D;
 using EZCameraShake;
 using System.Collections.Generic;
 using PC2D;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class HeroCombat : MonoBehaviour, ICharCollider {
 
@@ -66,9 +67,6 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 		playerState = eCharState.Attacking;
 		animationLogic.attack ();
-//		this.GetComponent<playerDeathLogic> ().die ();
-		//AutoFade.FadeOut (Color.black, callback);
-		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 	}
 		
 
@@ -139,9 +137,9 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	public bool Hit (int dmg)
 	{
-		Debug.Log ("Player got hit!");
-		CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
+		ProCamera2DShake.Instance.ShakeUsingPreset("Hit");
 		CameraUtils.Instance.blinkCamera();
+	
 		animationLogic.Hit ();
 		playerState = eCharState.UnderAttack;
 		if (playerStats.hit (dmg)) {

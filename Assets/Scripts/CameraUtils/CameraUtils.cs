@@ -10,7 +10,7 @@ public class CameraUtils : MonoBehaviour {
 
 	public bool blink = false;
 	public bool increment = true;
-	public float opac = 0.8f;
+	public float opac = 0.6f;
 
 	public float blinkLen = 0.3f;
 	public float regLen = 5f;

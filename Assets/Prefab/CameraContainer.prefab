@@ -122,8 +122,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.0500003}
-  m_LocalScale: {x: 1.5249999, y: 5.5306253, z: 1}
+  m_LocalPosition: {x: 0.005, y: 0.1, z: 1.0500003}
+  m_LocalScale: {x: 2.1423209, y: 7.120416, z: 1}
   m_Children: []
   m_Father: {fileID: 468594}
   m_RootOrder: 1
@@ -134,8 +134,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.05}
-  m_LocalScale: {x: 1.5249999, y: 5.530626, z: 1}
+  m_LocalPosition: {x: -0.015, y: 0.1, z: 1.05}
+  m_LocalScale: {x: 2.0590014, y: 8.7833, z: 1}
   m_Children: []
   m_Father: {fileID: 468594}
   m_RootOrder: 0
@@ -146,7 +146,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.6, y: 0.4, z: -27.12}
+  m_LocalPosition: {x: 29.729382, y: 3.9160745, z: -27.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489062}
@@ -275,10 +275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProCamera2D: {fileID: 11420390}
   Strength: {x: 1, y: 1}
-  Duration: 0.25
-  Vibrato: 5
+  Duration: 0.22
+  Vibrato: 11
   Randomness: 0.1
-  Smoothness: 0.1
+  Smoothness: 0.07
   InitialAngle: -1
   UseRandomInitialAngle: 1
   Rotation: {x: 0, y: 0, z: 0}
@@ -289,6 +289,14 @@ MonoBehaviour:
     Vibrato: 5
     Randomness: 0.1
     Smoothness: 0.1
+    InitialAngle: -1
+    Rotation: {x: 0, y: 0, z: 0}
+  - Name: Hit
+    Strength: {x: 1, y: 1, z: 0}
+    Duration: 0.22
+    Vibrato: 11
+    Randomness: 0.1
+    Smoothness: 0.07
     InitialAngle: -1
     Rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &11417336

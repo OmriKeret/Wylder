@@ -19,12 +19,12 @@ public class CollisionLogic  {
 		var playerCollider = player.GetComponentInParent <ICharCollider>();
 		var enemyCollider = enemy.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
-		var enemyState = enemyCollider.GetState();
+		var enemyState =  eCharState.Attacking;//enemyCollider.GetState(); Stub.
 		var enemyAttacking = (enemyState == eCharState.Attacking);
 
 		if (isAttackable (playerState) && enemyAttacking) {
 			// Enemy attacked player, and player can be attacked.
-			playerCollider.Hit (enemyCollider.getAttackStrength ());
+			playerCollider.Hit (1) ;//enemyCollider.getAttackStrength ()); Stub.
 
 		} else if (playerState == eCharState.Countering && enemyAttacking) {
 			// Enemy got countered.

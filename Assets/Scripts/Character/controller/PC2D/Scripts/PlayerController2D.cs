@@ -16,8 +16,10 @@ public class PlayerController2D : MonoBehaviour
 	private bool _isShooting;
 	private bool _isCountring;
 	private bool _isBlocking;
+	private bool _isHit;
 
 	private HeroCombat _heroCombat;
+
 
     // Use this for initialization
     void Start()
@@ -51,9 +53,11 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (_heroCombat.GetState () == eCharState.dead) {
+		eCharState charState = _heroCombat.GetState ();
+		if (charState == eCharState.dead || charState == eCharState.KillingMove) {
 			return;
 		}
+
 		_isBlocking = Input.GetButton ("Block");
 		_isAttacking = Input.GetButtonDown ("Attack");
 		_isCountring = Input.GetButtonDown ("Counter");

@@ -21,7 +21,7 @@ namespace PC2D
 		private HeroCombat heroCombat;
 
 		//Name table for animation state.
-		public string[] AnimatorStateNames = {"Idle","Jump","Land", "RunStop", "Slide", "Run", "Walk", "Roll", "Attack", "Walk__Combat", "Idle_Combat", "runAttack", "Cling", "Shoot_magic_charge", "Shoot_magic_shoot", "Killing_move1", "Block", "Counter", "Fall"};
+		public string[] AnimatorStateNames = {"Idle","Jump","Land", "RunStop", "Slide", "Run", "Walk", "Roll", "Attack", "Walk__Combat", "Idle_Combat", "runAttack", "Cling", "Shoot_magic_charge", "Shoot_magic_shoot", "Killing_move1", "Block", "Counter", "Fall", "Hit", "Death"};
 
 
 
@@ -44,7 +44,7 @@ namespace PC2D
         // Update is called once per frame
         void Update()
         {
-			if ((isAttacking () || isShooting() || isBlocking() || isCountering()) && _motor.motorState != PlatformerMotor2D.MotorState.Dashing) {
+			if ((isAttacking () || isShooting() || isBlocking() || isCountering() || getHit()) && _motor.motorState != PlatformerMotor2D.MotorState.Dashing) {
 				return;
 			}
             if (_motor.motorState == PlatformerMotor2D.MotorState.Jumping ||
@@ -176,6 +176,10 @@ namespace PC2D
 			_animator.Play ("Idle");
 		}
 
+		public void Die() {
+			_animator.Play ("Death");
+		}
+
         private void SetCurrentFacingLeft()
         {
             _currentFacingLeft = _motor.facingLeft;
@@ -223,6 +227,10 @@ namespace PC2D
 
 		public bool isCountering() {
 			return GetCurrentAnimatorStateName ().StartsWith ("Counter") ;
+		}
+
+		public bool getHit() {
+			return GetCurrentAnimatorStateName ().StartsWith ("Hit") || GetCurrentAnimatorStateName ().StartsWith ("Death") ; ;
 		}
 			
     }
