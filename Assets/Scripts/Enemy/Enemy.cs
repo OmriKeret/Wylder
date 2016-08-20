@@ -36,6 +36,9 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected int walkingCounter = 0;
 
 
+    public int HP;
+    public int AttackForce;
+
     public float movement { get; private set; }
     public float distanceCheckForJump;
     public float distanceCheckForAttack;
@@ -45,9 +48,11 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public Vector2 player;
     protected bool isLanding;
 
-    protected static readonly LayerMask jumpMask = ~LayerMask.GetMask("bones", "EnemyWeapon");
-    protected static readonly LayerMask playerMask = LayerMask.GetMask("PlayerExternal");
-    protected static readonly LayerMask restMask = 0xFFFF;
+    public LayerMask jumpMask;
+    public LayerMask playerMask;
+    public LayerMask restMask = 0xFFFF;
+
+    protected GameObject playerObj;
 
     public virtual void Awake()
     {
@@ -74,9 +79,11 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         {
             new LineCastModel() {MainObject = transform, Start = jumpMin, End = distanceCheckForJump * Vector2.right , Invoker = Jump, Mask = jumpMask},
             new LineCastModel() {MainObject = transform, Start = jumpMax, End = distanceCheckForJump * Vector2.right , Invoker = Flip, Mask = jumpMask},
-            new LineCastModel() {MainObject = transform, Start = player, End = distanceCheckForJump * Vector2.right , Invoker = Attack, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = player, End = distanceCheckForAttack * Vector2.right , Invoker = Attack, Mask = playerMask},
             new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2() , Invoker = Rest, Mask = 0},
         };
+
+        playerObj = FindObjectOfType<PlayerController2D>().gameObject;
     }
 
     //protected virtual void Update()
@@ -222,12 +229,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public void ActiveHitAnimation()
     {
-        animator.SetTrigger("GotHit");
+        animator.Play("Recieve_Hit");
     }
 
     public void ActiveDeathAnimation()
     {
-        animator.SetTrigger("Death");
+        animator.Play("Death");
     }
 
     public void ActiveHitSound()
@@ -253,7 +260,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public int getAttackStrength()
     {
-        throw new NotImplementedException();
+        return AttackForce;
     }
 
     protected enum eLineCaster

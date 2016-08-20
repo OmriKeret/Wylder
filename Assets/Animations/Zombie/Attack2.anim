@@ -23,18 +23,18 @@ AnimationClip:
         tangentMode: 0
       - time: 0.41666666
         value: {x: -0.0001, y: 0.0001, z: -10.5}
-        inSlope: {x: 0, y: 0, z: 50.87977}
-        outSlope: {x: 0, y: 0, z: 50.87977}
+        inSlope: {x: 0, y: 0, z: 81.68976}
+        outSlope: {x: 0, y: 0, z: 81.68976}
         tangentMode: 0
       - time: 0.5833333
-        value: {x: -0.0001, y: 0.0001, z: 13}
-        inSlope: {x: 0, y: 0, z: 61.92025}
-        outSlope: {x: 0, y: 0, z: 61.92025}
+        value: {x: -0.0001, y: 0.0001, z: 23.269999}
+        inSlope: {x: 0, y: 0, z: 80.406235}
+        outSlope: {x: 0, y: 0, z: 80.406235}
         tangentMode: 0
       - time: 1
         value: {x: -0.0001, y: 0.0001, z: 5.8501997}
-        inSlope: {x: 0, y: 0, z: -17.15952}
-        outSlope: {x: 0, y: 0, z: -17.15952}
+        inSlope: {x: 0, y: 0, z: -41.807518}
+        outSlope: {x: 0, y: 0, z: -41.807518}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -118,18 +118,18 @@ AnimationClip:
         tangentMode: 0
       - time: 0.41666666
         value: {x: -0.0001, y: 0.00059999997, z: 41.7}
-        inSlope: {x: 0, y: 0, z: -212.97662}
-        outSlope: {x: 0, y: 0, z: -212.97662}
+        inSlope: {x: 0, y: 0, z: -148.9266}
+        outSlope: {x: 0, y: 0, z: -148.9266}
         tangentMode: 0
       - time: 0.5833333
-        value: {x: -0.0001, y: 0.00059999997, z: -44.05}
-        inSlope: {x: 0, y: 0, z: -198.62344}
-        outSlope: {x: 0, y: 0, z: -198.62344}
+        value: {x: -0.0001, y: 0.00059999997, z: -22.699999}
+        inSlope: {x: 0, y: 0, z: -160.19342}
+        outSlope: {x: 0, y: 0, z: -160.19342}
         tangentMode: 0
       - time: 1
         value: {x: -0.0001, y: 0.00059999997, z: 4.8055}
-        inSlope: {x: 0, y: 0, z: 117.25319}
-        outSlope: {x: 0, y: 0, z: 117.25319}
+        inSlope: {x: 0, y: 0, z: 66.01319}
+        outSlope: {x: 0, y: 0, z: 66.01319}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -179,18 +179,18 @@ AnimationClip:
         tangentMode: 0
       - time: 0.41666666
         value: {x: 0, y: 0.0001, z: -113.21}
-        inSlope: {x: 0, y: 0, z: 152.94469}
-        outSlope: {x: 0, y: 0, z: 152.94469}
+        inSlope: {x: 0, y: 0, z: 119.55469}
+        outSlope: {x: 0, y: 0, z: 119.55469}
         tangentMode: 0
       - time: 0.5833333
-        value: {x: 0, y: 0.0001, z: -43.67}
-        inSlope: {x: 0, y: 0, z: 180.84734}
-        outSlope: {x: 0, y: 0, z: 180.84734}
+        value: {x: 0, y: 0.0001, z: -54.8}
+        inSlope: {x: 0, y: 0, z: 160.81334}
+        outSlope: {x: 0, y: 0, z: 160.81334}
         tangentMode: 0
       - time: 1
         value: {x: 0, y: 0.0001, z: -66.813896}
-        inSlope: {x: 0, y: 0, z: -55.545353}
-        outSlope: {x: 0, y: 0, z: -55.545353}
+        inSlope: {x: 0, y: 0, z: -28.833351}
+        outSlope: {x: 0, y: 0, z: -28.833351}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1178,18 +1178,18 @@ AnimationClip:
         tangentMode: 10
       - time: 0.41666666
         value: -10.5
-        inSlope: 50.87977
-        outSlope: 50.87977
+        inSlope: 81.68976
+        outSlope: 81.68976
         tangentMode: 10
       - time: 0.5833333
-        value: 13
-        inSlope: 61.92025
-        outSlope: 61.92025
+        value: 23.269999
+        inSlope: 80.406235
+        outSlope: 80.406235
         tangentMode: 10
       - time: 1
         value: 5.8501997
-        inSlope: -17.15952
-        outSlope: -17.15952
+        inSlope: -41.807518
+        outSlope: -41.807518
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1868,18 +1868,18 @@ AnimationClip:
         tangentMode: 10
       - time: 0.41666666
         value: 41.7
-        inSlope: -212.97662
-        outSlope: -212.97662
+        inSlope: -148.9266
+        outSlope: -148.9266
         tangentMode: 10
       - time: 0.5833333
-        value: -44.05
-        inSlope: -198.62344
-        outSlope: -198.62344
+        value: -22.699999
+        inSlope: -160.19342
+        outSlope: -160.19342
         tangentMode: 10
       - time: 1
         value: 4.8055
-        inSlope: 117.25319
-        outSlope: 117.25319
+        inSlope: 66.01319
+        outSlope: 66.01319
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -2258,18 +2258,18 @@ AnimationClip:
         tangentMode: 10
       - time: 0.41666666
         value: -113.21
-        inSlope: 152.94469
-        outSlope: 152.94469
+        inSlope: 119.55469
+        outSlope: 119.55469
         tangentMode: 10
       - time: 0.5833333
-        value: -43.67
-        inSlope: 180.84734
-        outSlope: 180.84734
+        value: -54.8
+        inSlope: 160.81334
+        outSlope: 160.81334
         tangentMode: 10
       - time: 1
         value: -66.813896
-        inSlope: -55.545353
-        outSlope: -55.545353
+        inSlope: -28.833351
+        outSlope: -28.833351
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -3006,7 +3006,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3016,7 +3016,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3026,7 +3026,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3156,7 +3156,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
+    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3166,7 +3166,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
+    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3176,7 +3176,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/R hand 1/R hand 2
+    path: Global_CTRL/Pelvis_CTRL_GRP/Pelvis_CTRL
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 1

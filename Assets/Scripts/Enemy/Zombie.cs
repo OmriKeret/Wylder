@@ -23,6 +23,15 @@ public class Zombie : Enemy {
         
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject == playerObj)
+        {
+            playerObj.GetComponent<ICharCollider>().Hit(AttackForce);
+            Debug.Log("Boom!");
+        }
+    }
+
     protected override void Attack()
     {
         Debug.Log("Attacking");
