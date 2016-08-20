@@ -89,9 +89,6 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 		playerState = eCharState.Blocking;
 		animationLogic.Block ();
-		//		this.GetComponent<playerDeathLogic> ().die ();
-		//AutoFade.FadeOut (Color.black, callback);
-		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 	}
 
 	public void callback() {
@@ -133,7 +130,12 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	{
 		ProCamera2DShake.Instance.ShakeUsingPreset("Hit");
 		CameraUtils.Instance.blinkCamera();
-	
+
+		// If player was defending than the damage is soften.
+		if (playerState == eCharState.Blocking) {
+			dmg = dmg/2;
+		}
+
 		animationLogic.Hit ();
 		playerState = eCharState.UnderAttack;
 		if (playerStats.hit (dmg)) {
