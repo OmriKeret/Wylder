@@ -6,11 +6,11 @@ public class Projectile : MonoBehaviour {
 
 	public AudioClip hit;
 	public AudioClip breaking;
-
+	private AudioSource source;
 	public GameObject explosion;
 
 	void Start () {
-
+		source = GetComponent<AudioSource>();
 
 	}
 
@@ -18,11 +18,11 @@ public class Projectile : MonoBehaviour {
 
 		Debug.Log ("Collided magic");
 		if (collided.gameObject.tag != "Player") {
-			//audio.PlayOneShot(breaking);
+			
 
 		}
 		if (collided.gameObject.tag == "Enemy") {
-			//audio.PlayOneShot(hit);
+			
 
 		}
 
@@ -30,6 +30,8 @@ public class Projectile : MonoBehaviour {
 			//audio.PlayOneShot(hit);
 
 		}
+
+		source.PlayOneShot(hit, 0.5f);
 		destoryObject ();
 
 	}

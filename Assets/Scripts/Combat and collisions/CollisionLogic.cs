@@ -28,7 +28,6 @@ public class CollisionLogic  {
 			playerCollider.Hit (1) ;//enemyCollider.getAttackStrength ()); Stub.
 
 		} else if (playerState == eCharState.Countering && enemyAttacking) {
-			
 			// Enemy got countered.
 			//enemyCollider.ActiveCounterAnimation();
 			playerCollider.ActiveCounterAnimation(enemy.gameObject.tag);
