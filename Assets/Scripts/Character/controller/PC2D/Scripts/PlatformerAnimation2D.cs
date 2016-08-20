@@ -168,7 +168,7 @@ namespace PC2D
 			_animator.Play ("Hit");
 		}
 
-		public void KillingMove() {
+		public void KillingMove(string type) {
 			_animator.Play ("Killing_move1");
 		}
 

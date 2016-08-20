@@ -9,7 +9,7 @@ public interface ICharCollider {
     void ActiveHitSound();
     void ActiveDeathSound();
     bool Hit(int dmg); //(return true if the hitted char is dead after the hit)
-    void ActiveCounterAnimation();// (we need to think how to synchronize both on the animation)
+	void ActiveCounterAnimation(string type);// (we need to think how to synchronize both on the animation)
 	int getAttackStrength();
 
 

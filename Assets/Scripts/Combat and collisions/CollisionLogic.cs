@@ -23,13 +23,15 @@ public class CollisionLogic  {
 		var enemyAttacking = (enemyState == eCharState.Attacking);
 
 		if (isAttackable (playerState) && enemyAttacking) {
+			
 			// Enemy attacked player, and player can be attacked.
 			playerCollider.Hit (1) ;//enemyCollider.getAttackStrength ()); Stub.
 
 		} else if (playerState == eCharState.Countering && enemyAttacking) {
+			
 			// Enemy got countered.
-			enemyCollider.ActiveCounterAnimation();
-			playerCollider.ActiveCounterAnimation();
+			//enemyCollider.ActiveCounterAnimation();
+			playerCollider.ActiveCounterAnimation(enemy.gameObject.tag);
 		}
 
 

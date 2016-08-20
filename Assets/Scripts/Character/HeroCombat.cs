@@ -94,12 +94,6 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		//CameraShaker.Instance.ShakeOnce (20f, 20f, .5f ,.2f);
 	}
 
-	public void counterSuccess() 
-	{
-		m_Anim.SetTrigger ("Killing");
-		playerState = eCharState.KillingMove;
-	}
-
 	public void callback() {
 		AutoFade.FadeIn(null);
 	}
@@ -152,10 +146,11 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	}
 
 	// The meaning here is active killing move animation, as the counter succeeded
-	public void ActiveCounterAnimation ()
+	public void ActiveCounterAnimation (string type)
 	{
 		Debug.Log ("Player countered successfully!");
-		counterSuccess ();
+		animationLogic.KillingMove (type);
+		playerState = eCharState.KillingMove;
 	}
 
 	#endregion

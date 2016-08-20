@@ -250,7 +250,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         return currentHp > 0;
     }
 
-    public void ActiveCounterAnimation()
+	public void ActiveCounterAnimation(String type)
     {
         throw new NotImplementedException();
     }
