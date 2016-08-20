@@ -434,7 +434,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0.66, y: 0, z: -0}
+        value: {x: 0.66, y: 0, z: 0}
         inSlope: {x: 3.978193, y: -0.76667, z: 0}
         outSlope: {x: 3.978193, y: -0.76667, z: 0}
         tangentMode: 0
@@ -466,7 +466,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: -0.14, y: 0, z: -0}
+        value: {x: -0.14, y: 0, z: 0}
         inSlope: {x: -7.8599997, y: 6.63, z: 0}
         outSlope: {x: -7.8599997, y: 6.63, z: 0}
         tangentMode: 0
@@ -1304,7 +1304,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: -0
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 10
@@ -1409,7 +1409,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: -0
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 10
@@ -4353,6 +4353,36 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
     path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/L hand 1
     classID: 4
     script: {fileID: 0}
@@ -4674,36 +4704,6 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
     path: Global_CTRL/Pelvis/TORSO 2/TORSO 1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Global_CTRL/Pelvis/TORSO 2/TORSO 1/Head
     classID: 4
     script: {fileID: 0}
   - curve:
