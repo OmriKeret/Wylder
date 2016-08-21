@@ -17,15 +17,15 @@ public class CollisionLogic  {
 	public void EnemyCollidedWithPlayer(GameObject enemy, GameObject player) {
     
 		var playerCollider = player.GetComponentInParent <ICharCollider>();
-		var enemyCollider = enemy.GetComponent<ICharCollider>();
+		var enemyCollider = enemy.transform.root.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
 		var enemyState =  enemyCollider.GetState(); 
 		var enemyAttacking = (enemyState == eCharState.Attacking);
 
 		if (isAttackable (playerState) && enemyAttacking) {
-			
-			// Enemy attacked player, and player can be attacked.
-			playerCollider.Hit (enemyCollider.getAttackStrength ());
+
+            // Enemy attacked player, and player can be attacked.
+            playerCollider.Hit(enemyCollider.getAttackStrength());
 
 		} else if (playerState == eCharState.Countering && enemyAttacking) {
 			// Enemy got countered.
@@ -40,7 +40,7 @@ public class CollisionLogic  {
 	/**
 	 * Invoked when enemy colides with player, player attack enemy logic.
 	 * */
-	public void playerCollideWithEnemy(GameObject player, GameObject enemy) {
+	public void playerCollideWithEnemy(GameObject enemy, GameObject player) {
         Debug.Log("Attacking enemy");
 		var playerCollider = player.GetComponentInParent <ICharCollider>();
 		var enemyCollider = enemy.transform.root.GetComponent<ICharCollider>();

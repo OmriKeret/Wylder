@@ -49,6 +49,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		} else {
 			playerState = eCharState.Default;
 		}
+
 	}
 
 
@@ -64,7 +65,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		if (playerState == eCharState.Countering || playerState == eCharState.KillingMove || playerState == eCharState.UnderAttack) {
 			return;
 		}
-
+        Debug.Log("Playing Attack");
 		playerState = eCharState.Attacking;
 		animationLogic.attack ();
 	}

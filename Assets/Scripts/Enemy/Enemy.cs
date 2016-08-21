@@ -6,23 +6,9 @@ using System;
 
 public abstract class Enemy : MonoBehaviour, ICharCollider {
 
-    protected const int MAX_HP = 5;
-    protected const int UNREACHABLE = 0, CLIMB = 1, JUMP = 2, FLOOR = 3;
-    protected Vector3 raysDelta;
-
-    protected int currentHp;
-    protected Rigidbody2D _rigidbody;
-    protected bool inCombat;
     protected eCharState state;
     protected Dictionary<PlatformerMotor2D.MotorState,Action> moveSM;
     protected PlatformerMotor2D _motor;
-
-    protected List<Transform> rays;
-    protected List<bool> raysCurrentHit;
-    public bool m_FacingRight = false;
-    float distToGround;
-    protected int layerMask;
-    protected int currentFPJ;
 
     protected Animator animator;
     protected PlatformerMotor2D.MotorState priorState;
@@ -51,16 +37,14 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public LayerMask jumpMask;
     public LayerMask playerMask;
-    public LayerMask restMask = 0xFFFF;
+    public LayerMask fullMask = 0xFFFF;
 
     protected GameObject playerObj;
     protected eCharState combatSM;
 
     public virtual void Awake()
     {
-        currentHp = MAX_HP;
-        animator = GetComponent<Animator>();
-        
+        animator = GetComponent<Animator>();        
     }
 
     public virtual void Start()
@@ -81,11 +65,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
         lineCastVectors = new List<LineCastModel>
         {
-            new LineCastModel() {MainObject = transform, Start = player, TargetObject = playerObj.transform, Size = distanceCheckForSearch , Invoker = Patrol, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = player, TargetObject = playerObj.transform, Size = distanceCheckForSearch , Invoker = ChasePlayer, Mask = playerMask},
             new LineCastModel() {MainObject = transform, Start = jumpMin, End = Vector2.right, Size = distanceCheckForJump, Invoker = Jump, Mask = jumpMask},
             new LineCastModel() {MainObject = transform, Start = jumpMax, End = Vector2.right, Size = distanceCheckForJump, Invoker = Flip, Mask = jumpMask},
             new LineCastModel() {MainObject = transform, Start = player, End = Vector2.right, Size = distanceCheckForAttack, Invoker = Attack, Mask = playerMask},
             new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = Rest, Mask = 0},
+            new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = ActiveDeathAnimation, Mask = 0},
         };
 
         
@@ -188,6 +173,17 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         
     }
 
+    protected virtual void ChasePlayer()
+    {
+        bool faceLeft = movement < 0;
+        bool enemyOnLeft = playerObj.transform.position.x < transform.position.x;
+        if (faceLeft ^ enemyOnLeft)
+        {
+            Flip();
+        }
+        Patrol();
+    }
+
     protected void Jump()
     {
         _motor.Jump();
@@ -208,7 +204,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected void Rest()
     {
-        lineCastVectors[(int)eLineCaster.rest].Mask = restMask;
+        lineCastVectors[(int)eLineCaster.rest].Mask = fullMask;
         _motor.normalizedXMovement = 0;
         animator.Play("IDLE");
         Debug.Log("Rest");
@@ -242,6 +238,9 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public void ActiveDeathAnimation()
     {
+        state = eCharState.dead;
+        lineCastVectors[(int)eLineCaster.death].Mask = fullMask;
+        _motor.normalizedXMovement = 0;
         animator.Play("Death");
     }
 
@@ -255,11 +254,26 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         throw new NotImplementedException();
     }
 
+    protected void Dead()
+    {
+        animator.enabled = false;
+        Destroy(_motor);
+        Destroy(this.gameObject, 2);
+    }
+
     public bool Hit(int dmg)
     {
-        currentHp -= dmg;
+        HP -= dmg;
         Debug.Log("Hit enemy");
-        return currentHp > 0;
+        bool isDead = HP <= 0;
+        if (isDead)
+        {
+            Debug.Log("in");
+            ActiveDeathAnimation();
+            Debug.Log("out");
+        }
+            
+        return isDead;
     }
 
 	public void ActiveCounterAnimation(String type)
@@ -278,6 +292,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         minJump,
         maxJump,
         attackPlayer,
-        rest
+        rest,
+        death
     }
 }

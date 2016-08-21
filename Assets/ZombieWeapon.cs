@@ -20,7 +20,7 @@ public class ZombieWeapon : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        collisionFacade.Collision(root, col.gameObject);
+        collisionFacade.Collision(this.gameObject, col.gameObject);
     }
 
     public void OnCollisionEnter2D(Collision2D col)

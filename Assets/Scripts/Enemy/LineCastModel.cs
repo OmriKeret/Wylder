@@ -13,7 +13,7 @@ public class LineCastModel {
     public Action Invoker { get; set; }
     public float Size { get; set; }
     public LayerMask Mask { get; set; }
-
+    
     private bool hit;
 
     public void Cast(bool faceRight)
@@ -23,12 +23,16 @@ public class LineCastModel {
         if (TargetObject == null)
             Debug.DrawLine((Vector2)MainObject.position + Start, (Vector2)MainObject.position + Start + End * Size * dir, Color.red);
         else
-            Debug.DrawLine((Vector2)MainObject.position + Start, (Vector2)MainObject.position + ((Vector2)TargetObject.position).normalized * Size * dir,Color.green);
+            Debug.DrawLine((Vector2)MainObject.position, (Vector2)TargetObject.position,Color.green);
         #endregion
+        RaycastHit2D curHit;
         if (TargetObject == null)
-            hit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * Size * dir,Mask);
+            curHit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * Size * dir,Mask);
         else
-            hit = Physics2D.Linecast((Vector2)MainObject.position + Start, (Vector2)MainObject.position + Start + ((Vector2)TargetObject.position).normalized * Size * dir, Mask);
+            curHit = Physics2D.Linecast((Vector2)MainObject.position, (Vector2)TargetObject.position, Mask);
+
+        hit = TargetObject == null ? curHit : curHit.distance >= Size ;
+
     }
 
     public void Flip()

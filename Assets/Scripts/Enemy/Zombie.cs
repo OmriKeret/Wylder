@@ -22,28 +22,28 @@ public class Zombie : Enemy {
     }
 	
 	protected override void FixedUpdate () {
-        base.FixedUpdate();
-        
+        base.FixedUpdate();        
     }
 
-	// Commented this out because we use triggers.
-//    void OnCollisionEnter2D(Collision2D coll)
-//    {
-//		Debug.Log ("Enemy recived collision");
-//        if (coll.gameObject == playerObj)
-//        {
-//            
-//            Debug.Log("Boom!");
-//        }
-//    }
+    // Commented this out because we use triggers.
+    //    void OnCollisionEnter2D(Collision2D coll)
+    //    {
+    //		Debug.Log ("Enemy recived collision");
+    //        if (coll.gameObject == playerObj)
+    //        {
+    //            
+    //            Debug.Log("Boom!");
+    //        }
+    //    }
 
-	public void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log ("Enemy collision trigger detected");
-		collisionFacade.Collision(this.gameObject, col.gameObject);
-	}
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("Enemy collision trigger detected");
+        collisionFacade.Collision(this.gameObject, col.gameObject);
+    }
 
 
-protected override void Attack()
+    protected override void Attack()
     {
         Debug.Log("Attacking");
         _motor.normalizedXMovement = 0;
