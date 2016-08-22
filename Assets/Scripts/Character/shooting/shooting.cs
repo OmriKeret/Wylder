@@ -40,7 +40,7 @@ public class shooting : MonoBehaviour {
 			chargeGlow.SetActive (false);
 			_chargingShot = false;
 			// We charged the shot, now we shoot.
-			shoot ();
+			shoot (timeLoading);
 		} else if (_chargingShot && timeLoading > 0){
 			
 			// Animate idle.
@@ -51,11 +51,11 @@ public class shooting : MonoBehaviour {
 		}
 	}
 
-	private void shoot() {
+	private void shoot(float str) {
 		_animation.shootShot ();
 		ProCamera2DShake.Instance.ShakeUsingPreset("Shot");
 		Rigidbody2D bulletInstance = Instantiate(bullet, transform.position, Quaternion.Euler(new Vector3(0, 0, 1))) as Rigidbody2D;
-
+		bulletInstance.gameObject.GetComponent<Projectile> ().setForce ((int)str);
 		if (_motor.facingLeft) {
 			// Shoot left.
 			bulletInstance.AddForce (new Vector2 (-1,0) * maxSpeed );

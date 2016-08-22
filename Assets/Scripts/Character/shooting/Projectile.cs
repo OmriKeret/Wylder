@@ -7,11 +7,13 @@ public class Projectile : MonoBehaviour {
 	public AudioClip hit;
 	public AudioClip breaking;
 	private AudioSource source;
+
 	public GameObject explosion;
+	private CollisionFacade collisionFacade; // This is used for the collisions.
 
 	void Start () {
 		source = GetComponent<AudioSource>();
-
+		collisionFacade = new CollisionFacade();
 	}
 
 	void OnCollisionEnter2D(Collision2D collided) {
@@ -26,9 +28,8 @@ public class Projectile : MonoBehaviour {
 
 		}
 
-		if (collided.gameObject.tag != "Enemy") {
-			//audio.PlayOneShot(hit);
-
+		if (collided.gameObject.tag == "Enemy") {
+			collisionFacade.Collision(collided.gameObject, this.gameObject);
 		}
 
 		source.PlayOneShot(hit, 0.5f);
@@ -38,6 +39,10 @@ public class Projectile : MonoBehaviour {
 	public void setForce (int force)
 	{
 		this.force = force;
+	}
+
+	public int getForce() {
+		return this.force;
 	}
 		
 
