@@ -14,7 +14,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	private playerDeathLogic deathLogic;
 	private PlayerStatsLogic playerStats;
 	private PlatformerAnimation2D animationLogic;
-
+	private GameObject lastEnemyAttacked = null;
 
 	//Player state.
 	private eCharState playerState;
@@ -61,6 +61,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	public void attack() 
 	{
+		lastEnemyAttacked = null;
 		// In case player can't attack then return.
 		if (playerState == eCharState.Countering || playerState == eCharState.KillingMove || playerState == eCharState.UnderAttack) {
 			return;
@@ -172,6 +173,21 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	public int getAttackStrength() {
 		// TODO: get the stats from somewhere.
 		return 1;
+	}
+
+	public bool RecivePendingDamage(int dmg) {
+		return false;
+	}
+
+	public bool CanCurrentlyAttack(GameObject enemy) {
+		if (lastEnemyAttacked != null && enemy.GetInstanceID () == lastEnemyAttacked.GetInstanceID ()) {
+			Debug.Log ("Cant attck");
+			return false;
+		} else {
+			lastEnemyAttacked = enemy;
+			return true;
+		}
+
 	}
 
 }
