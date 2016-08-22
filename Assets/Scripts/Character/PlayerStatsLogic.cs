@@ -50,10 +50,8 @@ public class PlayerStatsLogic : MonoBehaviour {
 		lastTimeHitted = Time.time;
 
 		timeToFullHealthFromCurrentHealth = (1 - (float)(HP / maxHP)) * timeToGenerateFromEmptyToFull;
-		Debug.Log ("time to full health is:" + timeToFullHealthFromCurrentHealth);
 		t = 0;
 		HP = HP - force;
-		Debug.Log("lost health, current Health: " + HP);
 		if (HP > 0) {
 			healthLogic.reduceHpTo (HP);
 			CameraUtils.Instance.changeOpecity((1f - (float)(HP/maxHP)) * 0.8f);

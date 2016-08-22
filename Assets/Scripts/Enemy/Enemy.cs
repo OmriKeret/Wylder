@@ -337,7 +337,6 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public bool Hit(int dmg)
     {
-		
         HP -= dmg;
         bool isDead = HP <= 0;
 		if (isDead) {
@@ -345,7 +344,8 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 			state = eCharState.dead;
 			ChangeCombatState (eCharState.dead);
 		} else {
-			animator.Play("Hit");
+			ChangeCombatState (eCharState.UnderAttack);
+			ActiveHitAnimation ();
 		}
             
         return isDead;

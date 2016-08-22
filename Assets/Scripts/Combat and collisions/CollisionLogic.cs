@@ -37,7 +37,12 @@ public class CollisionLogic  {
 
 	}
 
+	public void bulletColidedWithEnemy (GameObject enemy, GameObject bullet) {
+		var bulletStr = bullet.GetComponentInParent <Projectile>().getForce();
+		var enemyCollider = enemy.transform.root.GetComponent<ICharCollider>();
+		enemyCollider.Hit (bulletStr);
 
+	}
 	/**
 	 * Invoked when enemy colides with player, player attack enemy logic.
 	 * */
@@ -50,7 +55,6 @@ public class CollisionLogic  {
 
 		if (isAttackable (enemyState) && playerAttacking && playerCollider.CanCurrentlyAttack(enemy)) {
 			// Enemy attacked player, and player can be attacked.
-			enemyCollider.ActiveHitAnimation ();
 			enemyCollider.Hit (playerCollider.getAttackStrength ());
 		}
         else
