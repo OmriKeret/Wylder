@@ -45,6 +45,7 @@ public class Zombie : Enemy {
 
     protected override void Attack()
     {
+		
         Debug.Log("Attacking");
         _motor.normalizedXMovement = 0;
         bool attacking = false;
@@ -53,8 +54,11 @@ public class Zombie : Enemy {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(name))
                 attacking = true;
         });
-        if (!attacking)
-            animator.Play(attacksNames[random.Next(attacksNames.Count)]);
+		
+		if (!attacking) {
+			alreadyHitWithinCurrentAttack = false;
+			animator.Play (attacksNames [random.Next (attacksNames.Count)]);
+		}
 
     }
 

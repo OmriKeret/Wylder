@@ -20,10 +20,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     //Counters
     protected bool halt = false;
     protected int walkingCounter = 0;
+	protected int pendingDemage = 0;
 
-
+	//Combat.
     public int HP;
     public int AttackForce;
+	protected bool alreadyHitWithinCurrentAttack;
 
     public float movement { get; private set; }
     public float distanceCheckForSearch;
@@ -96,10 +98,18 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected virtual void FixedUpdate()
     {
+		Debug.Log ("Enemy state is: " + combatSM.ToString());
+
+		// If the enemy is dead or under attack, no use for raycasting.
+		if (combatSM == eCharState.dead || combatSM == eCharState.UnderAttack || combatSM == eCharState.Attacking) {
+			return;
+		}
+		Debug.Log ("Enemy state is: " + combatSM.ToString());
         if (moveSM.Keys.Contains(_motor.motorState))
         {
             moveSM[_motor.motorState].Invoke();
         }
+			
         else
         {
             Debug.Log("Missing " + _motor.motorState);
@@ -145,9 +155,8 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected virtual void GroundRaycast()
     {
         _motor.fallFast = false;
-
         lineCastVectors.ForEach((lineCaster) => lineCaster.Cast(false));
-        lineCastVectors.Reverse();
+        lineCastVectors.Reverse();	
         LineCastModel mostRelevantHit = null;
         int hitCount = 0;
         lineCastVectors.ForEach((lineCaster) =>
@@ -240,6 +249,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public void ActiveDeathAnimation()
     {
         state = eCharState.dead;
+		ChangeCombatState (eCharState.dead);
         lineCastVectors[(int)eLineCaster.death].Mask = fullMask;
         _motor.normalizedXMovement = 0;
         animator.Play("Death");
@@ -264,15 +274,16 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public bool Hit(int dmg)
     {
+		
         HP -= dmg;
-        Debug.Log("Hit enemy");
         bool isDead = HP <= 0;
-        if (isDead)
-        {
-            Debug.Log("in");
-            ActiveDeathAnimation();
-            Debug.Log("out");
-        }
+		if (isDead) {
+			ActiveDeathAnimation ();
+			state = eCharState.dead;
+			ChangeCombatState (eCharState.dead);
+		} else {
+			animator.Play("Hit");
+		}
             
         return isDead;
     }
@@ -296,4 +307,22 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         rest,
         death
     }
+
+	public bool RecivePendingDamage(int dmg) {
+		pendingDemage = dmg;
+		return HP - dmg <= 0;
+	}
+
+	public void TakePendingDamage() {
+		Hit (pendingDemage);
+		pendingDemage = 0;
+	}
+
+	public virtual bool CanCurrentlyAttack(GameObject o) {
+		var beforeChange = alreadyHitWithinCurrentAttack;
+		alreadyHitWithinCurrentAttack = true;
+		return !beforeChange;
+	}
+
+
 }

@@ -27,10 +27,11 @@ public class CollisionLogic  {
             // Enemy attacked player, and player can be attacked.
             playerCollider.Hit(enemyCollider.getAttackStrength());
 
-		} else if (playerState == eCharState.Countering && enemyAttacking) {
+		} else if (playerState == eCharState.Countering && enemyAttacking && enemyCollider.CanCurrentlyAttack(player)) {
 			// Enemy got countered.
 			enemyCollider.ActiveCounterAnimation(player.gameObject.tag);
 			playerCollider.ActiveCounterAnimation(enemy.gameObject.tag);
+			enemyCollider.RecivePendingDamage (playerCollider.getAttackStrength ());
 		}
 
 
@@ -41,15 +42,15 @@ public class CollisionLogic  {
 	 * Invoked when enemy colides with player, player attack enemy logic.
 	 * */
 	public void playerCollideWithEnemy(GameObject enemy, GameObject player) {
-        Debug.Log("Attacking enemy");
 		var playerCollider = player.GetComponentInParent <ICharCollider>();
 		var enemyCollider = enemy.transform.root.GetComponent<ICharCollider>();
 		var playerState = playerCollider.GetState();
 		var enemyState = enemyCollider.GetState();
 		var playerAttacking = (playerState == eCharState.Attacking);
 
-		if (isAttackable (enemyState) && playerAttacking) {
+		if (isAttackable (enemyState) && playerAttacking && playerCollider.CanCurrentlyAttack(enemy)) {
 			// Enemy attacked player, and player can be attacked.
+			enemyCollider.ActiveHitAnimation ();
 			enemyCollider.Hit (playerCollider.getAttackStrength ());
 		}
         else
