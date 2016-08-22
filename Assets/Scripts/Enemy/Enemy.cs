@@ -205,6 +205,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected void Rest()
     {
         lineCastVectors[(int)eLineCaster.rest].Mask = fullMask;
+		ChangeCombatState (eCharState.Default);
         _motor.normalizedXMovement = 0;
         animator.Play("IDLE");
         Debug.Log("Rest");
@@ -223,7 +224,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public eCharState GetState()
     {
-        return combatSM;
+		return combatSM;
     }
 
     public void ChangeCombatState(eCharState state)
