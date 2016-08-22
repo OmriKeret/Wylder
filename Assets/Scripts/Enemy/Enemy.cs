@@ -278,7 +278,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
 	public void ActiveCounterAnimation(String type)
     {
-        throw new NotImplementedException();
+        animator.Play("Countered_normal");
     }
 
     public int getAttackStrength()
