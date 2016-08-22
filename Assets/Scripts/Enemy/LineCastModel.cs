@@ -25,13 +25,11 @@ public class LineCastModel {
         else
             Debug.DrawLine((Vector2)MainObject.position, (Vector2)TargetObject.position,Color.green);
         #endregion
-        RaycastHit2D curHit;
         if (TargetObject == null)
-            curHit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * Size * dir,Mask);
+            hit = Physics2D.Linecast((Vector2)MainObject.position +  Start, (Vector2)MainObject.position +  Start + End * Size * dir,Mask);
         else
-            curHit = Physics2D.Linecast((Vector2)MainObject.position, (Vector2)TargetObject.position, Mask);
+            hit = Vector2.Distance(MainObject.transform.position, TargetObject.position) < Size;
 
-        hit = TargetObject == null ? curHit : curHit.distance >= Size ;
 
     }
 

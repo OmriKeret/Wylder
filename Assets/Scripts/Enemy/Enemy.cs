@@ -65,7 +65,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
         lineCastVectors = new List<LineCastModel>
         {
-            new LineCastModel() {MainObject = transform, Start = player, TargetObject = playerObj.transform, Size = distanceCheckForSearch , Invoker = ChasePlayer, Mask = playerMask},
+            new LineCastModel() {MainObject = transform, Start = player, TargetObject = playerObj.transform, Size = distanceCheckForSearch , Invoker = ChasePlayer, Mask = fullMask},
             new LineCastModel() {MainObject = transform, Start = jumpMin, End = Vector2.right, Size = distanceCheckForJump, Invoker = Jump, Mask = jumpMask},
             new LineCastModel() {MainObject = transform, Start = jumpMax, End = Vector2.right, Size = distanceCheckForJump, Invoker = Flip, Mask = jumpMask},
             new LineCastModel() {MainObject = transform, Start = player, End = Vector2.right, Size = distanceCheckForAttack, Invoker = Attack, Mask = playerMask},
@@ -169,14 +169,14 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     {
 
         _motor.normalizedXMovement = movement;
-        animator.Play("Run");
-        
+        animator.Play("Run");        
     }
 
     protected virtual void ChasePlayer()
     {
         bool faceLeft = movement < 0;
         bool enemyOnLeft = playerObj.transform.position.x < transform.position.x;
+        Debug.Log(string.Format("Chase {0}, {1}", faceLeft, enemyOnLeft));
         if (faceLeft ^ enemyOnLeft)
         {
             Flip();
