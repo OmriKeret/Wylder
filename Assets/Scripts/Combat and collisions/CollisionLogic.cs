@@ -69,8 +69,17 @@ public class CollisionLogic  {
         enemy2Sc.addEnemyNearby(enemy1Sc);
     }
 
+    public void removeEnemyNearby(GameObject enemy1, GameObject enemy2)
+    {
+        Enemy enemy1Sc = enemy1.transform.root.GetComponent<Enemy>();
+        Enemy enemy2Sc = enemy2.transform.root.GetComponent<Enemy>();
 
-	public void playerCollidedWithWall(GameObject player, GameObject wall) 
+        enemy1Sc.removeEnemyNearby(enemy2Sc);
+        enemy2Sc.removeEnemyNearby(enemy1Sc);
+    }
+
+
+    public void playerCollidedWithWall(GameObject player, GameObject wall) 
 	{
 
 	}

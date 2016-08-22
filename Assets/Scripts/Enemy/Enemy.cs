@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected GameObject playerObj;
     protected eCharState combatSM;
-    protected List<Enemy> nearbyEnemies;
+    protected HashSet<Enemy> nearbyEnemies;
 
     public virtual void Awake()
     {
@@ -78,7 +78,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = ActiveDeathAnimation, Mask = 0},
         };
 
-        nearbyEnemies = new List<Enemy> { this };
+        nearbyEnemies = new HashSet<Enemy>{ this };
         combatSM = eCharState.Default;
     }
 
@@ -124,6 +124,10 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         
+    }
+    protected virtual void OnTriggerExit2D(Collider2D other)
+    {
+
     }
 
     private static int _lockFlag = 0; // 0 - free
