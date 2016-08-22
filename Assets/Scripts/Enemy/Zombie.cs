@@ -18,7 +18,8 @@ public class Zombie : Enemy {
 
     public override void Start () {
         base.Start();
-		
+        Debug.Log(System.Environment.Version);
+
     }
 	
 	protected override void FixedUpdate () {

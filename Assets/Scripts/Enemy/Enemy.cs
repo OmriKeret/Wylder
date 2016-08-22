@@ -24,6 +24,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public int HP;
     public int AttackForce;
+    public int AttackCount;
 
     public float movement { get; private set; }
     public float distanceCheckForSearch;
@@ -37,10 +38,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public LayerMask jumpMask;
     public LayerMask playerMask;
+    public LayerMask emptyMask = 0;
     public LayerMask fullMask = 0xFFFF;
 
     protected GameObject playerObj;
     protected eCharState combatSM;
+    protected List<Enemy> nearbyEnemies;
 
     public virtual void Awake()
     {
@@ -73,7 +76,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = ActiveDeathAnimation, Mask = 0},
         };
 
-        
+        nearbyEnemies = new List<Enemy> { this };
         combatSM = eCharState.Default;
     }
 
@@ -113,13 +116,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         
     }
 
-    IEnumerator FlipAndWait(int seconds)
+    private static int _lockFlag = 0; // 0 - free
+
+
+    protected void ChooseAttacker()
     {
-        halt = true;
-        yield return new WaitForSeconds(seconds);
-        Flip();
-        yield return new WaitForSeconds(seconds);
-        halt = false;
+        
     }
 
     protected abstract void Attack();
@@ -159,6 +161,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             }
         });
         lineCastVectors.Reverse();
+        SyncAttacks();
         if (mostRelevantHit == null) //No hit means the way is clear
             Patrol();       
         else
@@ -170,6 +173,62 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
         _motor.normalizedXMovement = movement;
         animator.Play("Run");        
+    }
+
+    protected virtual void SyncAttacks()
+    {
+        foreach (Enemy enemy in nearbyEnemies)
+        {
+            if (enemy.GetState() == eCharState.Attacking)
+            {
+                return;
+            }
+        }
+
+        int totalProbability = 0;
+        Dictionary<Enemy, int> candidates = new Dictionary<Enemy, int>();
+        foreach (Enemy enemy in nearbyEnemies)
+        {
+            enemy.lineCastVectors[(int)eLineCaster.searchPlayer].Cast(false);
+            if (!enemy.lineCastVectors[(int)eLineCaster.searchPlayer].CheckAndReset())
+                continue;
+            int currentProb = enemy.AttackProbability();
+            Debug.Log("Prob " + currentProb);
+            candidates.Add(enemy, currentProb);
+            totalProbability += currentProb;
+        }
+        if (totalProbability == 0)
+            return;
+        Debug.Log("Should attack out of " + totalProbability);
+        System.Random rnd = new System.Random();
+        int attacker = rnd.Next(totalProbability);
+        foreach (Enemy enemy in candidates.Keys)
+        {
+            totalProbability -= candidates[enemy];
+            if (totalProbability <= 0)
+            {
+
+            }
+            else
+            {
+                enemy.Rest();
+            }
+        }
+
+    }
+
+    protected int AttackProbability()
+    {
+        return HP + AttackCount + AttackForce;
+    }
+
+    IEnumerator FlipAndWait(int seconds)
+    {
+        halt = true;
+        yield return new WaitForSeconds(seconds);
+        Flip();
+        yield return new WaitForSeconds(seconds);
+        halt = false;
     }
 
     protected virtual void ChasePlayer()
@@ -285,6 +344,16 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public int getAttackStrength()
     {
         return AttackForce;
+    }
+
+    public void addEnemyNearby(Enemy other)
+    {
+        nearbyEnemies.Add(other);
+    }
+
+    public void removeEnemyNearby(Enemy other)
+    {
+        nearbyEnemies.Remove(other);
     }
 
     protected enum eLineCaster
