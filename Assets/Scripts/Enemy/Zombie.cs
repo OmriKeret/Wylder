@@ -43,6 +43,12 @@ public class Zombie : Enemy {
         collisionFacade.Collision(this.gameObject, col.gameObject);
     }
 
+    //public void OnTriggerExit2D(Collider2D col)
+    //{
+    //    Debug.Log("Enemy collision trigger detected");
+    //    collisionFacade.ExitCollision(this.gameObject, col.gameObject);
+    //}
+
 
     protected override void Attack()
     {
