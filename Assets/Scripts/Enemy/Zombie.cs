@@ -8,6 +8,7 @@ public class Zombie : Enemy {
     private static List<string> attacksNames;
     private static System.Random random = new System.Random();
 	private CollisionFacade collisionFacade; // This is used for the collisions.
+    private ZombieSoundHolder soundHolder;
 
     public override void Awake()
     {
@@ -19,6 +20,7 @@ public class Zombie : Enemy {
     public override void Start () {
         base.Start();
         Debug.Log(System.Environment.Version);
+        soundHolder = GetComponent<ZombieSoundHolder>();
 
     }
 	
@@ -79,4 +81,18 @@ public class Zombie : Enemy {
         return collisionFacade;
     }
 
+    public override void ActiveHitSound()
+    {
+        soundSource.PlayOneShot(soundHolder.Hit);
+    }
+
+    public override void ActiveDeathSound()
+    {
+        soundSource.PlayOneShot(soundHolder.Death);
+    }
+
+    public void Play(AudioClip sound)
+    {
+        soundSource.PlayOneShot(sound);
+    }
 }

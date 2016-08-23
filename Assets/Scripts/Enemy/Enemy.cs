@@ -14,7 +14,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected EnemyAnimationHolder animHolder;
     protected PlatformerMotor2D.MotorState priorState;
     protected System.Reflection.MethodInfo changeMotorState;
-
+    protected AudioSource soundSource;
 
 
     //States
@@ -60,6 +60,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     {
 
         animHolder = GetComponent<EnemyAnimationHolder>();
+        soundSource = GetComponent<AudioSource>();
         _motor = GetComponent<PlatformerMotor2D>();
         changeMotorState = typeof(PlatformerMotor2D).GetProperty("motorState").GetSetMethod(true);
         
@@ -334,15 +335,9 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         animator.Play(animHolder.Death);
     }
 
-    public void ActiveHitSound()
-    {
-        throw new NotImplementedException();
-    }
+    public abstract void ActiveHitSound();
 
-    public void ActiveDeathSound()
-    {
-        throw new NotImplementedException();
-    }
+    public abstract void ActiveDeathSound();
 
     protected void Dead()
     {

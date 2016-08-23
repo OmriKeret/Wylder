@@ -3203,6 +3203,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
+  - time: 0.016666668
+    functionName: Play
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 1d48dca3bfbb4fe47b60472f8e587493,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.41666666
     functionName: ChangeCombatState
     data: 
