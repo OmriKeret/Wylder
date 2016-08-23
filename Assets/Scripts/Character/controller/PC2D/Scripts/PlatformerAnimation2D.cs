@@ -53,7 +53,7 @@ namespace PC2D
 
 		void playWalkSound() {
 			if (!source.isPlaying) {
-				source.PlayOneShot(walkSound, 0.1f);
+				source.PlayOneShot(walkSound, 0.005f);
 			}
 		}
 
