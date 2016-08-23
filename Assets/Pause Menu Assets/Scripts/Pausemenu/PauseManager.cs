@@ -294,7 +294,7 @@ namespace GreatArcStudios
                 readTerrain = terrain;
             }
            
-            mainCamShared = mainCam;
+         //   mainCamShared = mainCam;
             //Set the lastmusicmult and last audiomult
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
@@ -442,7 +442,7 @@ namespace GreatArcStudios
         /// </summary>
         public void returnToMenu()
         {
-            Application.LoadLevel(mainMenu);
+            Application.LoadLevel(0);
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
         }
 
@@ -800,9 +800,9 @@ namespace GreatArcStudios
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
             try
             {
-                mainCam.farClipPlane = renderDistINI;
+             //   mainCam.farClipPlane = renderDistINI;
                 Terrain.activeTerrain.detailObjectDensity = densityINI;
-                mainCam.fieldOfView = fovINI;
+               // mainCam.fieldOfView = fovINI;
                 mainPanel.SetActive(true);
                 mainmenuPanel.SetActive(false);
                 audioPanel.SetActive(false);
@@ -821,8 +821,8 @@ namespace GreatArcStudios
             {
 
                 Debug.Log("A problem occured (chances are the terrain was not assigned )");
-                mainCam.farClipPlane = renderDistINI;
-                mainCam.fieldOfView = fovINI;
+//                mainCam.farClipPlane = renderDistINI;
+//                mainCam.fieldOfView = fovINI;
                 mainPanel.SetActive(true);
                 mainmenuPanel.SetActive(false);
                 audioPanel.SetActive(false);
@@ -948,14 +948,14 @@ namespace GreatArcStudios
         {
             try
             {
-                mainCam.farClipPlane = f;
+               // mainCam.farClipPlane = f;
 
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
-                mainCam = Camera.main;
-                mainCam.farClipPlane = f;
+//                mainCam = Camera.main;
+//                mainCam.farClipPlane = f;
 
             }
 
@@ -1021,7 +1021,7 @@ namespace GreatArcStudios
         /// <param name="fov"></param>
         public void updateFOV(float fov)
         {
-            mainCam.fieldOfView = fov;
+          //  mainCam.fieldOfView = fov;
         }
         /// <summary>
         /// Toggle on or off Depth of Field. This is meant to be used with a checkbox.

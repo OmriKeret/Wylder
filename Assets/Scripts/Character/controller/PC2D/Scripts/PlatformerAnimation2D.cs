@@ -19,7 +19,10 @@ namespace PC2D
         private bool _isJumping;
         public bool _currentFacingLeft;
 		private HeroCombat heroCombat;
-
+		private AudioSource source;
+		public AudioClip jumpSound;
+		public AudioClip runSound;
+		public AudioClip walkSound;
 		//Name table for animation state.
 		public string[] AnimatorStateNames = {"Idle","Jump","Land", "RunStop", "Slide", "Run", "Walk", "Roll", "Attack", "Walk__Combat", "Idle_Combat", "runAttack", "Cling", "Shoot_magic_charge", "Shoot_magic_shoot", "Killing_move1", "Block", "Counter", "Fall", "Hit", "Death"};
 
@@ -33,19 +36,41 @@ namespace PC2D
         // Use this for initialization
         void Start()
         {
+			source = GetComponent<AudioSource>();
             _motor = GetComponent<PlatformerMotor2D>();
             _animator = GetComponent<Animator>();
             _animator.Play("Idle");
 			heroCombat = GetComponent<HeroCombat>();
             _motor.onJump += SetCurrentFacingLeft;
+			_motor.onJump += playJumpSound;
 			BuildNameTable();
         }
+
+
+		void playJumpSound() {
+			source.PlayOneShot(jumpSound, 0.1f);
+		}
+
+		void playWalkSound() {
+			if (!source.isPlaying) {
+				source.PlayOneShot(walkSound, 0.1f);
+			}
+		}
+
+		void playRunSound() {
+			if (!source.isPlaying) {
+				source.PlayOneShot(runSound, 0.4f);
+			}
+		}
 
         // Update is called once per frame
         void Update()
         {
 			if ((isAttacking () || isShooting() || isBlocking() || isCountering() || getHit()) && _motor.motorState != PlatformerMotor2D.MotorState.Dashing) {
 				return;
+			}
+			if (_motor.motorState == PlatformerMotor2D.MotorState.Jumping) {
+				
 			}
             if (_motor.motorState == PlatformerMotor2D.MotorState.Jumping ||
                 _isJumping &&
@@ -101,10 +126,12 @@ namespace PC2D
 						float speed = _motor.velocity.magnitude;
 						if (_motor.sprint) {
 							_animator.Play ("Run");
+							playRunSound ();
 						} else if (speed > _motor.groundSpeed && !_motor.onSlope || speed > _motor.sprintSpeed) {
 							_animator.Play("Slide");
 						} else {
 							_animator.Play("Walk");
+							playWalkSound ();
 						}
                         
                     }

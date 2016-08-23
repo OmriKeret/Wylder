@@ -17,6 +17,7 @@ public class PlayerController2D : MonoBehaviour
 	private bool _isCountring;
 	private bool _isBlocking;
 	private bool _isHit;
+	private AudioSource _source;
 
 	private HeroCombat _heroCombat;
 
@@ -27,6 +28,7 @@ public class PlayerController2D : MonoBehaviour
         _motor = GetComponent<PlatformerMotor2D>();
 		_playerAnim = GetComponent<PC2D.PlatformerAnimation2D>();
 		_heroCombat = GetComponent<HeroCombat>();
+		_source = GetComponent<AudioSource>();
     }
 
     // before enter en freedom state for ladders
