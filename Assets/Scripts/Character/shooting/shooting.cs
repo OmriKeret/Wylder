@@ -36,11 +36,12 @@ public class shooting : MonoBehaviour {
 			_chargingShot = true;
 			chargeGlow.SetActive (true);
 		} else if (_chargingShot && timeLoading > 2f) {
+			shoot (timeLoading);
 			timeLoading = 0;
 			chargeGlow.SetActive (false);
 			_chargingShot = false;
 			// We charged the shot, now we shoot.
-			shoot (timeLoading);
+
 		} else if (_chargingShot && timeLoading > 0){
 			
 			// Animate idle.

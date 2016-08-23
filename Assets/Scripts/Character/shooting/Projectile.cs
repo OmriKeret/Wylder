@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour {
 
 		}
 
-		if (collided.gameObject.tag == "Enemy") {
+		if (collided.gameObject.tag == "Enemy" || collided.gameObject.tag == "Boss") {
 			collisionFacade.Collision(collided.gameObject, this.gameObject);
 		}
 

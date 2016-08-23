@@ -31,7 +31,7 @@ public class CollisionLogic  {
 		} else if (playerState == eCharState.Countering && enemyAttacking && enemyCollider.CanCurrentlyAttack(player)) {
 			Debug.Log ("Enemy Tag:" + enemy.transform.root.tag);
 			if (isBoss) {
-				Debug.Log (isBoss);
+				
 				playerCollider.dodge ();
 
 			} else {
