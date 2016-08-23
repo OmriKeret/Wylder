@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour {
 		collisionFacade.Collision(this.gameObject, col.gameObject);
 	}
 
+	public void OnParticleCollision(GameObject col) {
+		collisionFacade.Collision(this.gameObject, col.gameObject);
+	}
+
 	public void OnCollisionEnter2D(Collision2D col)
 	{
 		//collisionFacade.Collision(this.gameObject, col.gameObject);

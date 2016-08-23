@@ -170,7 +170,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -192,7 +192,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!108 &10875142
 Light:
   m_ObjectHideFlags: 1
@@ -258,7 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Seed: 0
   IntensityModifier: 2
-  IntensityMaxRange: {x: 0, y: 8}
+  IntensityMaxRange:
+    Minimum: 0
+    Maximum: 8
 --- !u!198 &19834194
 ParticleSystem:
   m_ObjectHideFlags: 1

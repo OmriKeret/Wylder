@@ -103,5 +103,10 @@ namespace DigitalRuby.PyroParticles
 
             base.Stop();
         }
+
+		public void OnParticleCollision(GameObject col) {
+			Debug.Log ("Player collided with particles");
+			//collisionFacade.Collision(this.gameObject, col.gameObject);
+		}
     }
 }
