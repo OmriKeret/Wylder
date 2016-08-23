@@ -10,11 +10,7 @@ TagManager:
   - Bullet
   - Fire
   - EnemyWeapon
-<<<<<<< HEAD
-  - Fire
-=======
   - EnemySyncer
->>>>>>> e7d4a4345f4e35236b2c7d28a7ee772c1d6c581e
   layers:
   - Default
   - TransparentFX
