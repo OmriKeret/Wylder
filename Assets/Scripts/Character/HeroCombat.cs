@@ -19,6 +19,13 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	//Player state.
 	private eCharState playerState;
 
+	public AudioClip attackSound;
+	public AudioClip counterHitSound;
+	public AudioClip stabSound;
+	public AudioClip deathSound;
+	public AudioClip hitSound;
+	private AudioSource source;
+
 
 	private void Awake()
 	{
@@ -28,6 +35,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		deathLogic = GetComponent<playerDeathLogic> ();
 		playerStats = GetComponent<PlayerStatsLogic> ();
 		animationLogic = GetComponent<PlatformerAnimation2D> ();
+		source = GetComponent<AudioSource>();
 	}
 
 	// Mainly used to synchornize player animation and state.
@@ -62,11 +70,15 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 	public void attack() 
 	{
 		lastEnemyAttacked = null;
+
 		// In case player can't attack then return.
 		if (playerState == eCharState.Countering || playerState == eCharState.KillingMove || playerState == eCharState.UnderAttack) {
 			return;
 		}
-        Debug.Log("Playing Attack");
+		if (playerState != eCharState.Attacking) {
+			source.PlayOneShot(attackSound, 0.2f);
+		}
+        
 		playerState = eCharState.Attacking;
 		animationLogic.attack ();
 	}
@@ -115,6 +127,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	public void ActiveDeathAnimation ()
 	{
+		source.PlayOneShot(deathSound, 0.2f);
 		deathLogic.die ();
 	}
 
@@ -141,6 +154,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 		animationLogic.Hit ();
 		playerState = eCharState.UnderAttack;
 		if (playerStats.hit (dmg)) {
+			source.PlayOneShot(deathSound, 0.2f);
 			deathLogic.die ();
 			return true;
 		}
@@ -188,6 +202,14 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 			return true;
 		}
 
+	}
+
+	public void playCounterHitSound() {
+		source.PlayOneShot(counterHitSound, 0.2f);
+	}
+
+	public void playStabSound() {
+		source.PlayOneShot(stabSound, 0.2f);
 	}
 
 }
