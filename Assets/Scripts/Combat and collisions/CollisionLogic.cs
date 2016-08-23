@@ -21,6 +21,7 @@ public class CollisionLogic  {
 		var playerState = playerCollider.GetState();
 		var enemyState =  enemyCollider.GetState(); 
 		var enemyAttacking = (enemyState == eCharState.Attacking);
+		var isBoss = enemy.transform.root.tag.Equals ("Boss");
 
 		if (isAttackable (playerState) && enemyAttacking) {
 
@@ -28,10 +29,17 @@ public class CollisionLogic  {
             playerCollider.Hit(enemyCollider.getAttackStrength());
 
 		} else if (playerState == eCharState.Countering && enemyAttacking && enemyCollider.CanCurrentlyAttack(player)) {
-			// Enemy got countered.
-			enemyCollider.ActiveCounterAnimation(player.gameObject.tag);
-			playerCollider.ActiveCounterAnimation(enemy.gameObject.tag);
-			enemyCollider.RecivePendingDamage (playerCollider.getAttackStrength ());
+			Debug.Log ("Enemy Tag:" + enemy.transform.root.tag);
+			if (isBoss) {
+				Debug.Log (isBoss);
+				playerCollider.dodge ();
+
+			} else {
+				// Enemy got countered.
+				enemyCollider.ActiveCounterAnimation (player.gameObject.tag);
+				playerCollider.ActiveCounterAnimation (enemy.gameObject.tag);
+				enemyCollider.RecivePendingDamage (playerCollider.getAttackStrength ());
+			}
 		}
 
 
@@ -63,6 +71,7 @@ public class CollisionLogic  {
         }
 
 	}
+
 
     private static System.Random rnd = new System.Random();
 

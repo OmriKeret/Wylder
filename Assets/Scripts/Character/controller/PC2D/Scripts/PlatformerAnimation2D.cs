@@ -53,7 +53,7 @@ namespace PC2D
 
 		void playWalkSound() {
 			if (!source.isPlaying) {
-				source.PlayOneShot(walkSound, 0.1f);
+				source.PlayOneShot(walkSound, 0.005f);
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace PC2D
         // Update is called once per frame
         void Update()
         {
-			if ((isAttacking () || isShooting() || isBlocking() || isCountering() || getHit()) && _motor.motorState != PlatformerMotor2D.MotorState.Dashing) {
+			if ((isAttacking () || isShooting() || isBlocking() || isCountering() || getHit() || isDodging()) && _motor.motorState != PlatformerMotor2D.MotorState.Dashing) {
 				return;
 			}
 			if (_motor.motorState == PlatformerMotor2D.MotorState.Jumping) {
@@ -258,6 +258,14 @@ namespace PC2D
 
 		public bool getHit() {
 			return GetCurrentAnimatorStateName ().StartsWith ("Hit") || GetCurrentAnimatorStateName ().StartsWith ("Death") ; ;
+		}
+
+		public bool isDodging() {
+			return GetCurrentAnimatorStateName ().StartsWith ("Dodge");
+		}
+
+		public void dodge() {
+			_animator.Play ("Dodge");
 		}
 			
     }

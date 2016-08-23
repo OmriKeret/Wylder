@@ -20,13 +20,22 @@ public class CollisionFacade {
 			{ PairModel.New<string,string>("Enemy","Enemy") , doNothing },
             { PairModel.New<string,string>("Enemy","EnemySyncer") , collisionLogic.addEnemyNearby },
             { PairModel.New<string,string>("Enemy","Wall") , doNothing},
-			{ PairModel.New<string,string>("Player","Wall") , collisionLogic.playerCollidedWithWall },
 			{ PairModel.New<string,string>("Enemy","Untagged") , doNothing},
-			{ PairModel.New<string,string>("Player","Untagged") , doNothing},
-			{ PairModel.New<string,string>("Player","Enemy") , doNothing },
             { PairModel.New<string,string>("Enemy","Player") , doNothing },
             { PairModel.New<string,string>("Enemy","PlayerWeapon") , collisionLogic.playerCollideWithEnemy},
-            { PairModel.New<string,string>("Enemy","Bullet") , collisionLogic.bulletColidedWithEnemy}
+            { PairModel.New<string,string>("Enemy","Bullet") , collisionLogic.bulletColidedWithEnemy},
+			{ PairModel.New<string,string>("Player","Untagged") , doNothing},
+			{ PairModel.New<string,string>("Player","Enemy") , doNothing },
+			{ PairModel.New<string,string>("Player","Wall") , collisionLogic.playerCollidedWithWall },
+
+			{ PairModel.New<string,string>("Player","Boss") , doNothing },
+			{ PairModel.New<string,string>("Boss","Untagged") , doNothing},
+			{ PairModel.New<string,string>("Boss","Player") , doNothing },
+			{ PairModel.New<string,string>("Boss","PlayerWeapon") , collisionLogic.playerCollideWithEnemy},
+			{ PairModel.New<string,string>("Boss","Bullet") , collisionLogic.bulletColidedWithEnemy},
+			{ PairModel.New<string,string>("Boss","Enemy") , doNothing },
+			{ PairModel.New<string,string>("Boss","EnemySyncer") , collisionLogic.addEnemyNearby },
+			{ PairModel.New<string,string>("Boss","Wall") , doNothing},
 
         };
 

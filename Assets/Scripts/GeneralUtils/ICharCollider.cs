@@ -13,6 +13,7 @@ public interface ICharCollider {
 	bool CanCurrentlyAttack(GameObject o);
 	void ActiveCounterAnimation(string type);// (we need to think how to synchronize both on the animation)
 	int getAttackStrength();
+	void dodge();
 
 
 	/**

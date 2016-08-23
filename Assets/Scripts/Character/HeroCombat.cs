@@ -158,6 +158,7 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 			deathLogic.die ();
 			return true;
 		}
+		source.PlayOneShot(hitSound, 0.2f);
 		return false;
 
 
@@ -210,6 +211,11 @@ public class HeroCombat : MonoBehaviour, ICharCollider {
 
 	public void playStabSound() {
 		source.PlayOneShot(stabSound, 0.2f);
+	}
+
+	public void dodge() {
+		Debug.Log ("Player is Dodging");
+		animationLogic.dodge ();
 	}
 
 }
