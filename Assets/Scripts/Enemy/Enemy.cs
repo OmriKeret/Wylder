@@ -11,8 +11,11 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected PlatformerMotor2D _motor;
 
     protected Animator animator;
+    protected EnemyAnimationHolder animHolder;
     protected PlatformerMotor2D.MotorState priorState;
     protected System.Reflection.MethodInfo changeMotorState;
+
+
 
     //States
     protected bool isGrounded;
@@ -56,6 +59,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     public virtual void Start()
     {
 
+        animHolder = GetComponent<EnemyAnimationHolder>();
         _motor = GetComponent<PlatformerMotor2D>();
         changeMotorState = typeof(PlatformerMotor2D).GetProperty("motorState").GetSetMethod(true);
         
@@ -186,7 +190,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     {
 
         _motor.normalizedXMovement = movement;
-        animator.Play("Run");        
+        animator.Play(animHolder.Run);        
     }
 
     protected virtual bool SyncAttacks()
@@ -261,14 +265,14 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected void Jump()
     {
         _motor.Jump();
-        animator.Play("Jump");
+        animator.Play(animHolder.Jump);
     }
 
     protected void Air()
     {
         changeMotorState.Invoke(_motor, new object[] { PlatformerMotor2D.MotorState.Falling });
         Debug.Log("Air");
-        animator.Play("Air");
+        animator.Play(animHolder.Air);
     }
 
     protected void Land()
@@ -287,12 +291,12 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     protected void Rest()//one iteration
     {
-        RestOrSleep("IDLE");
+        RestOrSleep(animHolder.Idle);
     }
 
     protected void Sleep()//repeate until wakeup
     {
-        RestOrSleep("Sleep");
+        RestOrSleep(animHolder.Idle);
     }
 
     protected void WakeUp()
@@ -318,7 +322,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public void ActiveHitAnimation()
     {
-        animator.Play("Recieve_Hit");
+        animator.Play(animHolder.RecieveHit);
     }
 
     public void ActiveDeathAnimation()
@@ -327,7 +331,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 		ChangeCombatState (eCharState.dead);
         lineCastVectors[(int)eLineCaster.death].Mask = fullMask;
         _motor.normalizedXMovement = 0;
-        animator.Play("Death");
+        animator.Play(animHolder.Death);
     }
 
     public void ActiveHitSound()
@@ -365,7 +369,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
 	public void ActiveCounterAnimation(String type)
     {
-        animator.Play("Countered_normal");
+        animator.Play(animHolder.Counter);
     }
 
     public int getAttackStrength()
