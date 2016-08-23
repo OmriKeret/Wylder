@@ -46,6 +46,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
     protected GameObject playerObj;
     protected eCharState combatSM;
     protected HashSet<Enemy> nearbyEnemies;
+    private static System.Random rnd = new System.Random();
 
     public virtual void Awake()
     {
@@ -78,7 +79,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             new LineCastModel() {MainObject = transform, Start = new Vector2(), End = new Vector2(), Size = 1 , Invoker = ActiveDeathAnimation, Mask = 0},
         };
 
-        nearbyEnemies = new HashSet<Enemy>{ this };
+        nearbyEnemies = new HashSet<Enemy>();
         combatSM = eCharState.Default;
     }
 
@@ -165,6 +166,7 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         lineCastVectors.Reverse();	
         LineCastModel mostRelevantHit = null;
         int hitCount = 0;
+        
         lineCastVectors.ForEach((lineCaster) =>
         {
             if (lineCaster.CheckAndReset() && mostRelevantHit == null)
@@ -174,9 +176,8 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             }
         });
         lineCastVectors.Reverse();
-        SyncAttacks();
         if (mostRelevantHit == null) //No hit means the way is clear
-            Patrol();       
+            Patrol();
         else
             mostRelevantHit.Invoker.Invoke();
     }
@@ -188,13 +189,14 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         animator.Play("Run");        
     }
 
-    protected virtual void SyncAttacks()
+    protected virtual bool SyncAttacks()
     {
         foreach (Enemy enemy in nearbyEnemies)
         {
             if (enemy.GetState() == eCharState.Attacking)
             {
-                return;
+                Rest();
+                return false;
             }
         }
 
@@ -206,31 +208,31 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
             if (!enemy.lineCastVectors[(int)eLineCaster.searchPlayer].CheckAndReset())
                 continue;
             int currentProb = enemy.AttackProbability();
-            Debug.Log("Prob " + currentProb);
             candidates.Add(enemy, currentProb);
             totalProbability += currentProb;
         }
         if (totalProbability == 0)
-            return;
-        Debug.Log("Should attack out of " + totalProbability);
-        System.Random rnd = new System.Random();
+            return true;
+        //Debug.Log("Should attack out of " + totalProbability);
+        
         int attacker = rnd.Next(totalProbability);
         foreach (Enemy enemy in candidates.Keys)
         {
             totalProbability -= candidates[enemy];
             if (totalProbability <= 0)
             {
-
+                //enemy.ChangeCombatState(eCharState.Attacking);
             }
             else
             {
                 enemy.Rest();
             }
         }
+        return combatSM != eCharState.Default;
 
     }
 
-    protected int AttackProbability()
+    public int AttackProbability()
     {
         return HP + AttackCount + AttackForce;
     }
@@ -274,13 +276,23 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
         Debug.Log("Land");
     }
 
-    protected void Rest()
+    protected void RestOrSleep(string action)
     {
         lineCastVectors[(int)eLineCaster.rest].Mask = fullMask;
-		ChangeCombatState (eCharState.Default);
+        ChangeCombatState(eCharState.Default);
         _motor.normalizedXMovement = 0;
-        animator.Play("IDLE");
-        Debug.Log("Rest");
+        animator.Play(action);
+        Debug.Log(action);
+    }
+
+    protected void Rest()//one iteration
+    {
+        RestOrSleep("IDLE");
+    }
+
+    protected void Sleep()//repeate until wakeup
+    {
+        RestOrSleep("Sleep");
     }
 
     protected void WakeUp()
@@ -363,12 +375,22 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 
     public void addEnemyNearby(Enemy other)
     {
-        nearbyEnemies.Add(other);
+        if (!other.nearbyEnemies.Contains(this))
+        {
+            other.Sleep();
+            nearbyEnemies.Add(other);
+        }
     }
 
     public void removeEnemyNearby(Enemy other)
     {
-        nearbyEnemies.Remove(other);
+        if (nearbyEnemies.Contains(other))
+        {
+            nearbyEnemies.Remove(other);
+            other.WakeUp();
+        }
+        Debug.Log("Remove");
+        
     }
 
     protected enum eLineCaster

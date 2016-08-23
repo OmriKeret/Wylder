@@ -64,13 +64,19 @@ public class CollisionLogic  {
 
 	}
 
+    private static System.Random rnd = new System.Random();
+
     public void addEnemyNearby(GameObject enemy1, GameObject enemy2)
     {
         Enemy enemy1Sc = enemy1.transform.root.GetComponent<Enemy>();
         Enemy enemy2Sc = enemy2.transform.root.GetComponent<Enemy>();
 
-        enemy1Sc.addEnemyNearby(enemy2Sc);
-        enemy2Sc.addEnemyNearby(enemy1Sc);
+        int totalChanse = enemy1Sc.AttackProbability() + enemy2Sc.AttackProbability();
+        int draft = rnd.Next(totalChanse);
+        if (draft < enemy1Sc.AttackProbability())
+            enemy1Sc.addEnemyNearby(enemy2Sc);
+        else
+            enemy2Sc.addEnemyNearby(enemy1Sc);
     }
 
     public void removeEnemyNearby(GameObject enemy1, GameObject enemy2)

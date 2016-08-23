@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Fire
   - EnemyWeapon
+  - EnemySyncer
   layers:
   - Default
   - TransparentFX
