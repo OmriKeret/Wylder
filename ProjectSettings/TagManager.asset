@@ -11,6 +11,7 @@ TagManager:
   - Fire
   - EnemyWeapon
   - EnemySyncer
+  - Fire
   layers:
   - Default
   - TransparentFX
