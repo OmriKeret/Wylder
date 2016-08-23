@@ -147,7 +147,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.25, y: 1.7, z: -27.12}
+  m_LocalPosition: {x: 4.7, y: 1.7, z: -27.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489062}
@@ -364,14 +364,6 @@ MonoBehaviour:
     Vibrato: 5
     Randomness: 0.1
     Smoothness: 0.1
-    InitialAngle: -1
-    Rotation: {x: 0, y: 0, z: 0}
-  - Name: Hit
-    Strength: {x: 1, y: 1, z: 0}
-    Duration: 0.11
-    Vibrato: 11
-    Randomness: 0.1
-    Smoothness: 0.07
     InitialAngle: -1
     Rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &11417336

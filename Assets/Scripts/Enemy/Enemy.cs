@@ -423,5 +423,8 @@ public abstract class Enemy : MonoBehaviour, ICharCollider {
 		return !beforeChange;
 	}
 
+	public void dodge() {
+	}
+
 
 }
